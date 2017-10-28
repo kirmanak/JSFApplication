@@ -7,19 +7,10 @@
         <title>Start page</title>
     </h:head>
     <h:body>
-        <h:form>
-            <h:outputLabel for="name" value="Enter your name" required="true" />
-            <h:inputText id="name" value="#{hello.name}" />
-            <h:message for="name" />
-            <br />
-            <h:commandButton value="Say hello" action="#{hello.createMessage}">
-                <f:ajax execute="@form" render="@form" />
-            </h:commandButton>
-            <br />
-            #{hello.message}
-        </h:form>
         <h:outputText value="#{timeBean.currentDate}">
             <f:convertDateTime dateStyle="full" pattern="dd.MM.yyyy 'at' HH:mm:ss z"/>
         </h:outputText>
+        <br/>
+        <h:link outcome="main" value="Основная страница" />
     </h:body>
 </html>

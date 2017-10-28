@@ -8,18 +8,24 @@
     <h:head>
         <title>Main page</title>
     </h:head>
-    <h:body>
-        <h:form>
-            <h:outputLabel for="X" value="Координата X:" required="true" />
-            <ace:sliderEntry id="X" value="#{rowBean.x}" min="-2" max="2" stepPercent="20" />
-            <br />
-            <h:outputLabel for="Y" value="Координата Y:" required="true" />
-            <h:inputText id="Y" value="#{rowBean.y}" />
-            <br />
-            <h:outputLabel for="R" value="Коэффициент R: " required="true" />
-            <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" />
-            <br />
-            <h:commandButton process="@form" id="submit-button" value="Проверить" action="#{rowBean.process}" />
-        </h:form>
+    <h:body onload="draw()">
+        <h:outputScript library="WEB-INF/classes/js" name="Graph.js"/>
+        <h:outputScript library="WEB-INF/classes/js" name="script.js"/>
+        <h:link outcome="index" value="Стартовая страница" />
+        <h:panelGrid columns="3">
+            <h:form>
+                <h:outputLabel for="X" value="Координата X:" required="true" />
+                <ace:sliderEntry id="X" value="#{rowBean.x}" min="-2" max="2" showLabels="true" />
+                <br />
+                <h:outputLabel for="Y" value="Координата Y:" required="true" />
+                <h:inputText id="Y" value="#{rowBean.y}" />
+                <br />
+                <h:outputLabel for="R" value="Коэффициент R: " required="true" />
+                <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" showLabels="true" />
+                <br />
+                <h:commandButton process="@form" id="submit-button" value="Проверить" action="#{rowBean.process}" />
+            </h:form>
+            <ui:include src="area.html"/>
+        </h:panelGrid>
     </h:body>
 </html>
