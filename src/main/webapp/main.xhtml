@@ -1,23 +1,25 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-<h:head>
-  <title>Main Page</title>
-</h:head>
-<h:body>
-  <h:panelGrid columns="3">
-    <h:form>
-      <h:outputLabel>Coordinate X: </h:outputLabel>
-      <h:inputText value="#{row.x}"/>
-      <br/><br/>
-      <h:outputLabel>Coordinate Y: </h:outputLabel>
-      <h:inputText value="#{row.y}"/>
-      <br/><br/>
-      <h:outputLabel>Coefficient R: </h:outputLabel>
-      <h:inputText value="#{row.r}"/>
-      <br/><br/>
-    </h:form>
-  </h:panelGrid>
-</h:body>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Main page<title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:outputLabel for="X" value="Координата X:" required="true" />
+            <ace:sliderEntry id="X" value="#{rowBean.x}" min="-2" max="2" stepPercent="20" />
+            <br />
+            <h:outputLabel for="Y" value="Координата Y:" required="true" />
+            <h:inputText id="Y" value="#{rowBean.y}" />
+            <br />
+            <h:outputLabel for="R" value="Коэффициент R: " required="true" />
+            <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" />
+            <br />
+            <h:commandButton process="@form" id="submit-button" value="Проверить" action="#{rowBean.process}" />
+        </h:form>
+    </h:body>
 </html>

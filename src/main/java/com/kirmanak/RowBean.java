@@ -5,37 +5,45 @@ import javax.faces.bean.RequestScoped;
 
 import java.io.Serializable;
 
-@ManagedBean(name="row")
+@ManagedBean
 @RequestScoped
 public class RowBean implements Serializable {
-  private String x;
-  private String y;
-  private String r;
+    private double X;
+    private double Y;
+    private double R;
+    private boolean result;
 
-  public RowBean () {
-  }
+    public void process() {
+      // x,y,z should be alredy initialized
+      // because that method in JSF after user's input
+      result = ((X*X+Y*Y <= R*R/4) && (X <= 0) && (Y >= 0)) ||
+        ((X <= 0) && (X >= -R/2) && (Y <= 0) && (Y >= -R)) ||
+        ((X >= 0) && (Y <= 0) && (Y <= X * 2 + R));
+      // connect to database and insert new data
+      // sort of ORM.insert(this);
+    }
 
-  public void setX (String x) {
-    this.x = x;
-  }
+    public double getX () {
+      return X;
+    }
 
-  public void setY (String y) {
-    this.y = y;
-  }
+    public double getY () {
+      return Y;
+    }
 
-  public void setR (String r) {
-    this.r = r;
-  }
+    public double getR () {
+      return R;
+    }
 
-  public String getX () {
-    return this.x;
-  }
+    public void setX (double X) {
+      if (!Double.isNaN(X) && Double.isFinite(X)) this.X = X;
+    }
 
-  public String getY () {
-    return this.y;
-  }
+    public void setY (double Y) {
+      if (!Double.isNaN(Y) && Double.isFinite(Y)) this.Y = Y;
+    }
 
-  public String getR () {
-    return this.r;
-  }
+    public void setR (double R) {
+      if (!Double.isNaN(R) && Double.isFinite(R)) this.R = R;
+    }
 }
