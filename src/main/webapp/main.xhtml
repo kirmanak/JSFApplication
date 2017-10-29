@@ -8,53 +8,32 @@
     <h:head>
         <title>Main page</title>
         <h:outputScript library="js" name="Graph.js"/>
-        <h:outputScript target="body">
-            var canvasId = "myCanvas";
-            var yId = "Y";
-            var xId = "X";
-            var buttonId = "button";
-            var myGraph = new Graph({
-                canvasId: canvasId,
-                minX: -3,
-                minY: -6,
-                maxX: 3,
-                maxY: 6,
-                unitsPerTick: 1
-            });
-            myGraph.canvas.addEventListener("click", function (evt) {
-                    var answer = myGraph.getClickCoords(evt);
-                    alert("Point is (" + answer.x + ";" + answer.y + ")");
-                }
-            );
-        </h:outputScript> 
+        
     </h:head>
-    <h:body onload="draw(#{rowBean.r}, myGraph)">
-        <h:outputScript library="js" name="script.js" target="body"/>
+    <h:body>
         <h:link outcome="index" value="Стартовая страница" />
         <h:panelGrid columns="2">
             <canvas id="myCanvas" width="300" height="300"></canvas>
-            <h:form>
+            <h:form id="mainForm">
                 <h:outputLabel for="X" value="Координата X:" />
                 <ace:sliderEntry stepPercent="20" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
-                    <ace:ajax render="xValue" />
+                    <ace:ajax render="xValue" event="slide" />
                 </ace:sliderEntry>                
                 <h:outputText id="xValue" value="${rowBean.x}"/>
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
-                <h:inputText id="Y" value="#{rowBean.y}" required="true">
-                    <f:validateDoubleRange for="Y" minimum="-5.0" maximum="5.0"/>
-                </h:inputText>
+                <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}"/>
                 <br/>
-                <h:message for="Y">Некорректное значение Y</h:message>
+                <h:message for="Y"/>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
                 <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" length="200" showLabels="true">
-                    <ace:ajax render="rValue"/>
+                    <ace:ajax render="rValue" event="slide" />
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="${rowBean.r}"/>
                 <br />
-                <h:commandButton value="Проверить" id="button" action="#{rowBean.process()}">
-                    <ace:ajax render="resultTable"/>
+                <h:commandButton onclick="myGraph.drawPoint(${rowBean.x}, ${rowBean.y}, ${rowBean.result} ? 'green':'orange')" value="Проверить" id="button" action="#{rowBean.process()}">
+                    <ace:ajax execute="@form" render="resultTable"/>
                 </h:commandButton> 
             </h:form>
         </h:panelGrid>
@@ -76,6 +55,29 @@
                 ${rowBean.result}
             </h:column>
         </h:dataTable>
-
+        <h:outputScript library="js" name="script.js"/>
+        <h:outputScript>
+            const canvasId = "myCanvas";
+            const yId = "mainForm:Y";
+            const xId = "mainForm:X_hidden";
+            const rId = "mainForm:R_hidden";
+            const buttonId = "mainForm:button";
+            const myGraph = new Graph({
+                canvasId: canvasId,
+                minX: -3,
+                minY: -6,
+                maxX: 3,
+                maxY: 6,
+                unitsPerTick: 1
+            });
+            myGraph.canvas.addEventListener("click", function (evt) {
+                var answer = myGraph.getClickCoords(evt);
+                document.getElementById(yId).value = answer.y;
+                document.getElementById(xId).value = answer.x;
+                document.getElementById(buttonId).click();
+                }
+            );
+            draw(rId, myGraph);    
+        </h:outputScript>
     </h:body>
 </html>

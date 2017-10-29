@@ -31,7 +31,7 @@ function Graph(config) {
 }
 
 Graph.prototype.drawXAxis = function () {
-    var context = this.context;
+    let context = this.context;
     context.save();
     context.beginPath();
     context.moveTo(0, this.centerY);
@@ -41,8 +41,8 @@ Graph.prototype.drawXAxis = function () {
     context.stroke();
 
     // draw tick marks
-    var xPosIncrement = this.unitsPerTick * this.unitX;
-    var xPos, unit;
+    let xPosIncrement = this.unitsPerTick * this.unitX;
+    let xPos, unit;
     context.font = this.font;
     context.textAlign = 'center';
     context.textBaseline = 'top';
@@ -74,7 +74,7 @@ Graph.prototype.drawXAxis = function () {
 };
 
 Graph.prototype.drawYAxis = function () {
-    var context = this.context;
+    let context = this.context;
     context.save();
     context.beginPath();
     context.moveTo(this.centerX, 0);
@@ -84,8 +84,8 @@ Graph.prototype.drawYAxis = function () {
     context.stroke();
 
     // draw tick marks
-    var yPosIncrement = this.unitsPerTick * this.unitY;
-    var yPos, unit;
+    let yPosIncrement = this.unitsPerTick * this.unitY;
+    let yPos, unit;
     context.font = this.font;
     context.textAlign = 'right';
     context.textBaseline = 'middle';
@@ -117,7 +117,7 @@ Graph.prototype.drawYAxis = function () {
 };
 
 Graph.prototype.drawEquationX = function (equation, color, thickness) {
-    var context = this.context;
+    let context = this.context;
     context.save();
     context.save();
     this.transformContext();
@@ -125,7 +125,7 @@ Graph.prototype.drawEquationX = function (equation, color, thickness) {
     context.beginPath();
     context.moveTo(this.minX, equation(this.minX));
 
-    for (var x = this.minX + this.iteration; x <= this.maxX; x += this.iteration) {
+    for (let x = this.minX + this.iteration; x <= this.maxX; x += this.iteration) {
         if (equation(x) !== null)
             context.lineTo(x, Number(equation(x)));
         else
@@ -141,7 +141,7 @@ Graph.prototype.drawEquationX = function (equation, color, thickness) {
 };
 
 Graph.prototype.drawEquationY = function (equation, color, thickness) {
-    var context = this.context;
+    let context = this.context;
     context.save();
     context.save();
     this.transformContext();
@@ -149,7 +149,7 @@ Graph.prototype.drawEquationY = function (equation, color, thickness) {
     context.beginPath();
     context.moveTo(equation(this.minY), this.minY);
 
-    for (var y = this.minY + this.iteration; y <= this.maxY; y += this.iteration) {
+    for (let y = this.minY + this.iteration; y <= this.maxY; y += this.iteration) {
         if (equation(y) !== null)
             context.lineTo(Number(equation(y)), y);
         else
@@ -165,7 +165,7 @@ Graph.prototype.drawEquationY = function (equation, color, thickness) {
 };
 
 Graph.prototype.transformContext = function () {
-    var context = this.context;
+    let context = this.context;
 
     // move context to center of canvas
     this.context.translate(this.centerX, this.centerY);
@@ -185,3 +185,18 @@ Graph.prototype.getClickCoords = function (evt) {
         y: (this.centerY + rect.top - evt.clientY) / this.unitY
     }
 };
+
+Graph.prototype.drawPoint = function(X, Y, color) {
+    let context = this.context;
+    context.save();
+    context.save();
+    this.transformContext();
+    context.beginPath();
+    context.arc(X, Y, 0.05, 0, 2 * Math.PI);
+    context.restore();
+    context.strokeStyle = color;
+    context.stroke();
+    context.fillStyle = color;
+    context.fill();
+    context.restore();
+}

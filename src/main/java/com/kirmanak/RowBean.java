@@ -2,15 +2,30 @@ package com.kirmanak;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.DecimalMax;
 
 import java.io.Serializable;
 
 @ManagedBean
 @RequestScoped
 public class RowBean implements Serializable {
-    private double X = 0;
-    private double Y = 0;
-    private double R = 2;
+    @NotNull(message = "X can't be empty.")
+    @DecimalMin(value = "-2.0", message = "X should be -2 or more.")
+    @DecimalMax(value = "2.0", message = "X should be 2 or less.")
+    private double X = 0.0;
+
+    @NotNull(message = "Y can't be empty.")
+    @DecimalMin(value = "-5.0", message = "Y should be -5 or more.")
+    @DecimalMax(value = "5.0", message = "Y should be 5 or less.")
+    private double Y = 0.0;
+
+    @NotNull(message = "R can't be empty.")
+    @DecimalMin(value = "2.0", message = "R should be 2 or more.")
+    @DecimalMax(value = "5.0", message = "R should be 5 or less.")
+    private double R = 2.0;
+
     private boolean result = false;
 
     public void process() {
@@ -42,14 +57,14 @@ public class RowBean implements Serializable {
     }
 
     public void setX (double X) {
-      if (!Double.isNaN(X) && Double.isFinite(X)) this.X = X;
+      this.X = X;
     }
 
     public void setY (double Y) {
-      if (!Double.isNaN(Y) && Double.isFinite(Y)) this.Y = Y;
+      this.Y = Y;
     }
 
     public void setR (double R) {
-      if (!Double.isNaN(R) && Double.isFinite(R)) this.R = R;
+      this.R = R;
     }
 }

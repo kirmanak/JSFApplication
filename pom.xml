@@ -6,7 +6,7 @@
   <groupId>com.kirmanak</groupId>
   <artifactId>IAD-Third</artifactId>
   <packaging>war</packaging>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.2-SNAPSHOT</version>
   <name>IAD-Third</name>
 
   <properties>
