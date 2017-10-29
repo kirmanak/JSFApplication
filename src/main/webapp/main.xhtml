@@ -17,23 +17,28 @@
             <h:form id="mainForm">
                 <h:outputLabel for="X" value="Координата X:" />
                 <ace:sliderEntry stepPercent="20" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
-                    <ace:ajax render="xValue" event="slide" />
+                    <ace:ajax render="xValue" execute="@this" />
                 </ace:sliderEntry>                
                 <h:outputText id="xValue" value="${rowBean.x}"/>
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
-                <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}"/>
+                <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
+                    <ace:ajax execute="@this" />
+                </h:inputText>
                 <br/>
                 <h:message for="Y"/>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
                 <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" length="200" showLabels="true">
-                    <ace:ajax render="rValue" event="slide" />
+                    <ace:ajax execute="@this" render="rValue" />
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="${rowBean.r}"/>
                 <br />
-                <h:commandButton onclick="myGraph.drawPoint(${rowBean.x}, ${rowBean.y}, ${rowBean.result} ? 'green':'orange')" value="Проверить" id="button" action="#{rowBean.process()}">
-                    <ace:ajax execute="@form" render="resultTable"/>
+                <h:commandButton 
+                onclick="if (${rowBean.result} == true) {myGraph.drawPoint(${rowBean.x}, ${rowBean.y}, 'green');}
+                else {myGraph.drawPoint(${rowBean.x}, ${rowBean.y}, 'orange');}"
+                 value="Проверить" id="button" action="#{rowBean.process()}">
+                    <ace:ajax render="resultTable"/>
                 </h:commandButton> 
             </h:form>
         </h:panelGrid>
@@ -59,8 +64,8 @@
         <h:outputScript>
             const canvasId = "myCanvas";
             const yId = "mainForm:Y";
-            const xId = "mainForm:X_hidden";
-            const rId = "mainForm:R_hidden";
+            const xId = "mainForm:X";
+            const rId = "mainForm:R";
             const buttonId = "mainForm:button";
             const myGraph = new Graph({
                 canvasId: canvasId,
@@ -73,7 +78,7 @@
             myGraph.canvas.addEventListener("click", function (evt) {
                 var answer = myGraph.getClickCoords(evt);
                 document.getElementById(yId).value = answer.y;
-                document.getElementById(xId).value = answer.x;
+                ice.ace.instance('mainForm:X').setValue(answer.x);
                 document.getElementById(buttonId).click();
                 }
             );

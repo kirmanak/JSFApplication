@@ -1,6 +1,6 @@
 function draw(rId,myGraph) {
     myGraph.context.clearRect(0, 0, myGraph.canvas.width, myGraph.canvas.height);
-    const R = document.getElementById(rId).value;
+    const R = ice.ace.instance(rId).getValue();
     myGraph.drawXAxis();
     myGraph.drawYAxis();
     myGraph.drawEquationX(function (x) {

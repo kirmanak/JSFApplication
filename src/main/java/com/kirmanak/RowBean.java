@@ -41,6 +41,7 @@ public class RowBean implements Serializable {
     }
 
     public boolean getResult() {
+      setResult();
       return result; 
     }
 
