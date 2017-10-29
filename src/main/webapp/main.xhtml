@@ -13,6 +13,7 @@
         <h:outputScript library="js" name="script.js" target="body"/>
         <h:link outcome="index" value="Стартовая страница" />
         <h:panelGrid columns="3">
+            <ui:include src="area.html"/>
             <h:form>
                 <h:outputLabel for="X" value="Координата X:" required="true" />
                 <ace:sliderEntry id="X" value="#{rowBean.x}" min="-2" max="2" showLabels="true" />
@@ -25,7 +26,6 @@
                 <br />
                 <h:commandButton process="@form" id="submit-button" value="Проверить" action="#{rowBean.process}" />
             </h:form>
-            <ui:include src="area.html"/>
         </h:panelGrid>
     </h:body>
 </html>
