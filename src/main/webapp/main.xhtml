@@ -12,31 +12,32 @@
         <h:outputScript library="js" name="Graph.js" target="body"/>
         <h:outputScript library="js" name="script.js" target="body"/>
         <h:link outcome="index" value="Стартовая страница" />
-        <h:panelGrid columns="3">
+        <h:panelGrid columns="2">
             <canvas id="myCanvas" width="300" height="300"></canvas>
             <h:form>
                 <h:outputLabel for="X" value="Координата X:" />
                 <ace:sliderEntry stepPercent="20" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
-	                <ace:ajax render="xValue" />
+                    <ace:ajax render="xValue" />
                 </ace:sliderEntry>                
                 <h:outputText id="xValue" value="#{rowBean.x}"/>
-                <br />
+                <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText id="Y" value="#{rowBean.y}" required="true">
                     <f:validateDoubleRange for="Y" minimum="-5.0" maximum="5.0"/>
                 </h:inputText>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
-                <ace:sliderEntry onSlideEnd="draw(#{rowBean.r})" id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" length="200" showLabels="true">
-	                <ace:ajax render="rValue"/>
+                <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" length="200" showLabels="true">
+                    <ace:ajax render="rValue"/>
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="#{rowBean.r}"/>
                 <br />
-                <h:commandButton process="@form" id="submit-button" value="Проверить" action="#{rowBean.process}" />
+                <h:commandButton value="Проверить" action="#{rowBean.process()}">
+                    <ace:ajax render="resultTable"/>
+                </h:commandButton> 
             </h:form>
-            
         </h:panelGrid>
-        <h:dataTable value="#{tableBean.list}" var="rowBean">
+        <h:dataTable value="#{tableBean.list}" var="rowBean" id="resultTable">
             <h:column>
                 <f:facet name="header">X</f:facet>
                 #{rowBean.X}

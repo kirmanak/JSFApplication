@@ -17,8 +17,9 @@ public class TableBean implements Serializable {
     }
 
     public List<RowBean> getList () {
-      // here should be call to ORM
-      // call returns some RowBeans
-      return list;
+    	// here should be call to ORM
+    	// call returns list rowbeans of current session
+    	// sorf of ORM.getList(this);
+    	return list;
     }
 }
