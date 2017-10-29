@@ -1,28 +1,7 @@
-var myFunc = function (evt) {};
-var canvasId = "myCanvas";
-var yId = "myCanvas";
-var xId = "myCanvas";
-document.getElementById(canvasId).addEventListener("click", myFunc);
-var myGraph;
-function draw(R) {
-    myGraph = new Graph({
-        canvasId: canvasId,
-        minX: -3,
-        minY: -6,
-        maxX: 3,
-        maxY: 6,
-        unitsPerTick: 1
-    });
-
-    myGraph.canvas.removeEventListener("click", myFunc);
-    myFunc = function (evt) {
-        var answer = myGraph.getClickCoords(evt);
-        alert("Point is (" + answer.x + ";" + answer.y + ")");
-        document.getElementById(xId).value = answer.x;
-        document.getElementById(yId).value = answer.y;
-    };
-    myGraph.canvas.addEventListener("click", myFunc);
-
+function draw(R,myGraph) {
+    myGraph.context.clearRect(0, 0, myGraph.canvas.width, myGraph.canvas.height);
+    myGraph.drawXAxis();
+    myGraph.drawYAxis();
     myGraph.drawEquationX(function (x) {
         var y = Number(x) + Number(x) - Number(R);
         if (x < 0 || x > R/2)

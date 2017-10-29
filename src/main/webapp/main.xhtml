@@ -7,9 +7,28 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>Main page</title>
+        <h:outputScript library="js" name="Graph.js"/>
+        <h:outputScript target="body">
+            var canvasId = "myCanvas";
+            var yId = "Y";
+            var xId = "X";
+            var buttonId = "button";
+            var myGraph = new Graph({
+                canvasId: canvasId,
+                minX: -3,
+                minY: -6,
+                maxX: 3,
+                maxY: 6,
+                unitsPerTick: 1
+            });
+            myGraph.canvas.addEventListener("click", function (evt) {
+                    var answer = myGraph.getClickCoords(evt);
+                    alert("Point is (" + answer.x + ";" + answer.y + ")");
+                }
+            );
+        </h:outputScript> 
     </h:head>
-    <h:body onload="draw(#{rowBean.r})">
-        <h:outputScript library="js" name="Graph.js" target="body"/>
+    <h:body onload="draw(#{rowBean.r}, myGraph)">
         <h:outputScript library="js" name="script.js" target="body"/>
         <h:link outcome="index" value="Стартовая страница" />
         <h:panelGrid columns="2">
@@ -19,41 +38,44 @@
                 <ace:sliderEntry stepPercent="20" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
                     <ace:ajax render="xValue" />
                 </ace:sliderEntry>                
-                <h:outputText id="xValue" value="#{rowBean.x}"/>
+                <h:outputText id="xValue" value="${rowBean.x}"/>
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText id="Y" value="#{rowBean.y}" required="true">
                     <f:validateDoubleRange for="Y" minimum="-5.0" maximum="5.0"/>
                 </h:inputText>
+                <br/>
+                <h:message for="Y">Некорректное значение Y</h:message>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
                 <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" length="200" showLabels="true">
                     <ace:ajax render="rValue"/>
                 </ace:sliderEntry>                
-                <h:outputText id="rValue" value="#{rowBean.r}"/>
+                <h:outputText id="rValue" value="${rowBean.r}"/>
                 <br />
-                <h:commandButton value="Проверить" action="#{rowBean.process()}">
+                <h:commandButton value="Проверить" id="button" action="#{rowBean.process()}">
                     <ace:ajax render="resultTable"/>
                 </h:commandButton> 
             </h:form>
         </h:panelGrid>
-        <h:dataTable value="#{tableBean.list}" var="rowBean" id="resultTable">
+        <h:dataTable value="${tableBean.list}" var="rowBean" rendered="#{tableBean.list.size() != 0}" id="resultTable">
             <h:column>
                 <f:facet name="header">X</f:facet>
-                #{rowBean.X}
+                ${rowBean.X}
             </h:column>
             <h:column>
                 <f:facet name="header">Y</f:facet>
-                #{rowBean.Y}
+                ${rowBean.Y}
             </h:column>
             <h:column>
                 <f:facet name="header">R</f:facet>
-                #{rowBean.R}
+                ${rowBean.R}
             </h:column>
             <h:column>
                 <f:facet name="header">Result</f:facet>
-                #{rowBean.result}
+                ${rowBean.result}
             </h:column>
         </h:dataTable>
+
     </h:body>
 </html>
