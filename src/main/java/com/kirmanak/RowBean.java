@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class RowBean implements Serializable {
     private double X;
     private double Y;
-    private double R;
+    private double R = 2;
     private boolean result;
 
     public void process() {

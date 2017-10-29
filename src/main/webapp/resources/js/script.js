@@ -2,9 +2,7 @@ var myFunc = function (evt) {};
 var canvasId = "myCanvas";
 document.getElementById(canvasId).addEventListener("click", myFunc);
 var myGraph;
-function draw() {
-    // var R = document.getElementById("R").value;
-    var R = 2;
+function draw(R) {
     myGraph = new Graph({
         canvasId: canvasId,
         minX: -3,
@@ -17,6 +15,7 @@ function draw() {
     myGraph.canvas.removeEventListener("click", myFunc);
     myFunc = function (evt) {
         var answer = myGraph.getClickCoords(evt);
+        alert("Point is (" + answer.x + ";" + answer.y + ")");
     };
     myGraph.canvas.addEventListener("click", myFunc);
 
