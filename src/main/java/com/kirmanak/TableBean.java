@@ -10,15 +10,15 @@ import java.util.ArrayList;
 @ManagedBean
 @SessionScoped
 public class TableBean implements Serializable {
-    private final List<RowBean> ROWS_LIST;
+    private final List<RowBean> list;
 
     public TableBean () {
-      ROWS_LIST = new ArrayList<>();
+      list = new ArrayList<>();
     }
 
     public List<RowBean> getList () {
       // here should be call to ORM
       // call returns some RowBeans
-      return ROWS_LIST;
+      return list;
     }
 }

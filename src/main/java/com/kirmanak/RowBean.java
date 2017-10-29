@@ -8,19 +8,24 @@ import java.io.Serializable;
 @ManagedBean
 @RequestScoped
 public class RowBean implements Serializable {
-    private double X;
-    private double Y;
+    private double X = 0;
+    private double Y = 0;
     private double R = 2;
     private boolean result;
 
     public void process() {
-      // x,y,z should be alredy initialized
-      // because that method in JSF after user's input
-      result = ((X*X+Y*Y <= R*R/4) && (X <= 0) && (Y >= 0)) ||
-        ((X <= 0) && (X >= -R/2) && (Y <= 0) && (Y >= -R)) ||
-        ((X >= 0) && (Y <= 0) && (Y <= X * 2 + R));
+      final double X = getX();
+      final double Y = getY();
+      final double R = getR();
+      final boolean result = getResult();
       // connect to database and insert new data
       // sort of ORM.insert(this);
+    }
+
+    public boolean getResult() {
+      return ((X*X+Y*Y <= R*R/4) && (X <= 0) && (Y >= 0)) ||
+        ((X <= 0) && (X >= -R/2) && (Y <= 0) && (Y >= -R)) ||
+        ((X >= 0) && (Y <= 0) && (Y <= X * 2 + R));
     }
 
     public double getX () {

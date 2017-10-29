@@ -27,13 +27,32 @@
                 </h:inputText>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
-                <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" length="200" showLabels="true">
+                <ace:sliderEntry onSlideEnd="draw(#{rowBean.r})" id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" length="200" showLabels="true">
 	                <ace:ajax render="rValue"/>
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="#{rowBean.r}"/>
                 <br />
                 <h:commandButton process="@form" id="submit-button" value="Проверить" action="#{rowBean.process}" />
             </h:form>
+            
         </h:panelGrid>
+        <h:dataTable value="#{tableBean.list}" var="rowBean">
+            <h:column>
+                <f:facet name="header">X</f:facet>
+                #{rowBean.X}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Y</f:facet>
+                #{rowBean.Y}
+            </h:column>
+            <h:column>
+                <f:facet name="header">R</f:facet>
+                #{rowBean.R}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Result</f:facet>
+                #{rowBean.result}
+            </h:column>
+        </h:dataTable>
     </h:body>
 </html>

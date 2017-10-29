@@ -1,5 +1,7 @@
 var myFunc = function (evt) {};
 var canvasId = "myCanvas";
+var yId = "myCanvas";
+var xId = "myCanvas";
 document.getElementById(canvasId).addEventListener("click", myFunc);
 var myGraph;
 function draw(R) {
@@ -16,6 +18,8 @@ function draw(R) {
     myFunc = function (evt) {
         var answer = myGraph.getClickCoords(evt);
         alert("Point is (" + answer.x + ";" + answer.y + ")");
+        document.getElementById(xId).value = answer.x;
+        document.getElementById(yId).value = answer.y;
     };
     myGraph.canvas.addEventListener("click", myFunc);
 
