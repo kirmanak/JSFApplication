@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.OptimisticLockType;
-import org.hibernate.Session;
 
 import java.io.Serializable;
 
@@ -55,11 +54,7 @@ public class RowBean implements Serializable {
 
     public void process() {
       setResult();
-      final Session session = HibernateUtil.getSessionFactory().openSession();
-      session.beginTransaction();
-      session.save(this);
-      session.getTransaction().commit();
-      HibernateUtil.shutdown();
+      // ORM.insert(this);
     }
 
     public void setResult() {

@@ -16,23 +16,24 @@
             <canvas id="myCanvas" width="300" height="300"></canvas>
             <h:form id="mainForm">
                 <h:outputLabel for="X" value="Координата X:" />
-                <ace:sliderEntry stepPercent="20" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
+                <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
                     <ace:ajax render="xValue" execute="@this" event="slide" />
                 </ace:sliderEntry>                
                 <h:outputText id="xValue" value="${rowBean.x}"/>
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
+                    <f:validateBean/>
                     <ace:ajax execute="@this" />
                 </h:inputText>
                 <br/>
                 <h:message for="Y"/>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
-                <ace:sliderEntry onSlide="redraw()" id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="6.25" length="200" showLabels="true">
+                <ace:sliderEntry onSlide="redraw()" id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="8.33333333" length="200" showLabels="true">
                     <ace:ajax event="slide" render="rValue" execute="@this"/>
                 </ace:sliderEntry>                
-                <h:outputText id="rValue" value="${rowBean.r}"/>
+                <h:outputText id="rValue"/>
                 <br />
                 <h:commandButton value="Проверить" id="button" process="@form" action="#{rowBean.process()}" 
                     onclick="drawAPoint(${rowBean.x}, ${rowBean.y}, ${rowBean.result}, myGraph)" >
@@ -63,6 +64,7 @@
             const yId = "mainForm:Y";
             const xId = "mainForm:X";
             const rId = "mainForm:R";
+            const rValueId = "mainForm:rValue";
             const buttonId = "mainForm:button";
             const myGraph = new Graph({
                 canvasId: canvasId,
@@ -81,6 +83,7 @@
             );
             function redraw() {
                 draw(rId, myGraph);
+                document.getElementById(rValue).innerHTML = ice.ace.instance(rId).getValue();
             }
             redraw();
         </h:outputScript>
