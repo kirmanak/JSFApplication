@@ -30,7 +30,7 @@
                 <h:message for="Y"/>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
-                <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="8.33333333" length="200" showLabels="true">
+                <ace:sliderEntry onSlide="redraw()" id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="8.33333333" length="200" showLabels="true">
                     <ace:ajax event="slide" render="rValue" execute="@this"/>
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="${rowBean.r}" />
