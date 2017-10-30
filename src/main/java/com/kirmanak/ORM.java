@@ -1,3 +1,5 @@
+package com.kirmanak;
+
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 
@@ -14,10 +16,10 @@ public class ORM {
 
 	public List<RowBean> getRows (final TableBean table) {
         final Session session = HibernateUtil.getSessionFactory().openSession();
-        sessione.beginTransaction();
+        session.beginTransaction();
         final List<RowBean> results = session.createQuery("from RowBean ").list();
         session.getTransaction().commit();
         HibernateUtil.shutdown(); 
-        return results();
+        return results;
 	}
 }
