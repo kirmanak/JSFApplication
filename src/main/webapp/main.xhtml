@@ -75,14 +75,14 @@
             myGraph.canvas.addEventListener("click", function (evt) {
                 var answer = myGraph.getClickCoords(evt);
                 document.getElementById(yId).value = answer.y;
-                ice.ace.instance('mainForm:X').setValue(answer.x);
+                ice.ace.instance('mainForm:X').setValue(Math.round(answer.x));
                 document.getElementById(buttonId).click();
                 }
             );
             function redraw() {
                 draw(rId, myGraph);
             }
-            draw(rId, myGraph);    
+            redraw();
         </h:outputScript>
     </h:body>
 </html>
