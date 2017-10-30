@@ -192,7 +192,7 @@ Graph.prototype.drawPoint = function(X, Y, color) {
     context.save();
     this.transformContext();
     context.beginPath();
-    context.arc(X, Y, 0.05, 0, 2 * Math.PI);
+    context.arc(X, Y, 0.1, 0, 2 * Math.PI);
     context.restore();
     context.strokeStyle = color;
     context.stroke();

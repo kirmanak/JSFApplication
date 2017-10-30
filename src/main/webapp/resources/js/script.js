@@ -1,3 +1,12 @@
+function drawAPoint(X, Y, result, myGraph) {
+    alert("Point is ("+X+";"+Y+"), result="+result);
+    if (result == true) {
+        myGraph.drawPoint(X, Y, 'green');
+    }
+    else {
+        myGraph.drawPoint(X, Y, 'orange');
+    }
+}
 function draw(rId,myGraph) {
     myGraph.context.clearRect(0, 0, myGraph.canvas.width, myGraph.canvas.height);
     const R = ice.ace.instance(rId).getValue();
