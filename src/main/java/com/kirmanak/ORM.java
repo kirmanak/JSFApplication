@@ -1,6 +1,5 @@
 package com.kirmanak;
 
-import org.hibernate.query.Query;
 import org.hibernate.Session;
 
 import java.util.List;

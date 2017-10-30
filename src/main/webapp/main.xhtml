@@ -30,10 +30,10 @@
                 <h:message for="Y"/>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
-                <ace:sliderEntry onSlide="redraw()" id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="8.33333333" length="200" showLabels="true">
+                <ace:sliderEntry id="R" value="#{rowBean.r}" min="2" max="5" stepPercent="8.33333333" length="200" showLabels="true">
                     <ace:ajax event="slide" render="rValue" execute="@this"/>
                 </ace:sliderEntry>                
-                <h:outputText id="rValue"/>
+                <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
                 <h:commandButton value="Проверить" id="button" process="@form" action="#{rowBean.process()}" 
                     onclick="drawAPoint(${rowBean.x}, ${rowBean.y}, ${rowBean.result}, myGraph)" >
@@ -77,13 +77,12 @@
             myGraph.canvas.addEventListener("click", function (evt) {
                 var answer = myGraph.getClickCoords(evt);
                 document.getElementById(yId).value = answer.y;
-                ice.ace.instance('mainForm:X').setValue(Math.round(answer.x));
+                ice.ace.instance(xId).setValue(Math.round(answer.x));
                 document.getElementById(buttonId).click();
                 }
             );
             function redraw() {
                 draw(rId, myGraph);
-                document.getElementById(rValue).innerHTML = ice.ace.instance(rId).getValue();
             }
             redraw();
         </h:outputScript>
