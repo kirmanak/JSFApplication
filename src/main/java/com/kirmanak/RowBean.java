@@ -28,6 +28,12 @@ import java.io.Serializable;
 @RequestScoped
 public class RowBean implements Serializable {
     private static final int accuracyR = 100;
+    private final String sessionId;
+
+    public RowBean () {
+      sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
@@ -52,18 +58,21 @@ public class RowBean implements Serializable {
     private double R = 2.0;
 
     @NotNull(message = "R can't be empty.")
-    @DecimalMin(value = "200", message = "R should be 2 or more.")
-    @DecimalMax(value = "500", message = "R should be 5 or less.")
+    @DecimalMin(value = "200", message = "IntegerR should be 200 or more.")
+    @DecimalMax(value = "500", message = "IntegerR should be 500 or less.")
     @Column(name = "integerR", unique = false, nullable = false, length = 100)
     private int integerR = 200;
-
 
     @Column(name = "res", unique = false, nullable = false, length = 100)
     private boolean result = false;
 
+    public String getSessionId () {
+      return this.sessionId;
+    }
+
     public void process() {
       setResult();
-      // ORM.insert(this, FacesContext.getExternalContext().getSessionId(false));
+      // ORM.insert(this);
     }
 
     public void setResult() {
@@ -103,11 +112,11 @@ public class RowBean implements Serializable {
 
     public void setIntegerR (final int R) {
       this.integerR = R;
-      setR((double) integerR/accuracyR);
+      this.R = (double) integerR/accuracyR;
     }
 
     public void setR (final double R) {
       this.R = R;
-      setIntegerR((int) Math.round(R*accuracyR));
+      this.integerR = (int) Math.round(R*accuracyR);
     }
 }

@@ -5,8 +5,8 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class ORM {
-	public void insert(final RowBean row, final FacesSession fs) {
-		if (fs.getId().isEmpty()) return; // WTF? Is it possible?
+	public void insert(final RowBean row) {
+        final String sessionId = row.getSessionId();
 		final Session session = HibernateUtil.getSessionFactory().openSession();
     	session.beginTransaction();
      	session.save(row);
@@ -17,8 +17,7 @@ public class ORM {
      	HibernateUtil.shutdown();
 	}
 
-	public List<RowBean> getRows (final FacesSession fs) {
-		if (fs.getId().isEmpty()) return null; // WTF? Is it possible?
+	public List<RowBean> getRows (final String sessionId) {
         final Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         // load every row connected with current session
@@ -26,5 +25,10 @@ public class ORM {
         session.getTransaction().commit();
         HibernateUtil.shutdown(); 
         return results;
+	}
+
+	public void removeSession (final String sessionId) {
+		// here you have to remove the session and
+		// each row, which connected to the session
 	}
 }
