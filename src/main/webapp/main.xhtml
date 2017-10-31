@@ -43,6 +43,9 @@
             </h:form>
         </h:panelGrid> 
         <h:panelGroup id="resultTable">
+            <h:commandButton rendered="#{tableBean.list.size() != 0}" action="#{tableBean.removeSession()}" value="Очистить результаты">
+                <f:ajax render="resultTable"/>
+            </h:commandButton>
             <h:dataTable value="${tableBean.list}" var="rowBean" rendered="#{tableBean.list.size() != 0}">
                 <h:column>
                     <f:facet name="header">X</f:facet>
