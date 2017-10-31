@@ -19,6 +19,8 @@ public class TableBean implements Serializable {
 
     public TableBean () {
       list = new ArrayList<>();
+      final RowBean example = new RowBean();
+      list.add(example);
       sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
     }
 

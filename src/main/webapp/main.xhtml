@@ -18,44 +18,43 @@
                 <h:outputLabel for="X" value="Координата X:" />
                 <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
                     <ace:ajax render="xValue" event="slide" />
-                    <f:ajax execute="@form" event="slide" />
                 </ace:sliderEntry>                
                 <h:outputText id="xValue" value="${rowBean.x}"/>
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
+                    <f:ajax render="errMsg"/>
                     <f:validateBean/>
-                    <f:ajax render="errMsg" execute="@form" />
                 </h:inputText>
                 <br/>
                 <h:message id="errMsg" for="Y"/>
                 <br />
                 <h:outputLabel for="R" value="Коэффициент R: " />
                 <ace:sliderEntry onSlide="redraw()" onSlideEnd="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
-                    <ace:ajax event="slide" render="rValue"/>
-                    <f:ajax execute="@form" event="slide" />
+                    <ace:ajax event="slide" render="rValue" />
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
-                <h:commandButton value="Проверить" onclick="alert('('+${rowBean.x}+';'+${rowBean.y}+'), R = '+${rowBean.r})" id="button" >
-                    <f:ajax render="resultTable @form" execute="@form" />
+                <h:commandButton value="Проверить" id="button" >
                     <f:actionListener binding="#{rowBean.process()}"/>
+                    <ace:ajax execute="@form" render=":resultTable lastRequest" />
                 </h:commandButton> 
+                <h:outputText id="lastRequest" value="Last request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>
             </h:form>
         </h:panelGrid>
         <h:panelGroup id="resultTable">
             <h:dataTable value="${tableBean.list}" var="rowBean" rendered="#{tableBean.list.size() != 0}">
                 <h:column>
                     <f:facet name="header">X</f:facet>
-                    ${rowBean.X}
+                    ${rowBean.x}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Y</f:facet>
-                    ${rowBean.Y}
+                    ${rowBean.y}
                 </h:column>
                 <h:column>
                     <f:facet name="header">R</f:facet>
-                    ${rowBean.R}
+                    ${rowBean.r}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Result</f:facet>
