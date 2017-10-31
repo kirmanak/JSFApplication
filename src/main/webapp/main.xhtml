@@ -18,14 +18,14 @@
                 <h:outputLabel for="X" value="Координата X:" />
                 <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
                     <ace:ajax render="xValue" event="slide" />
-                    <f:ajax execute="@this" event="slide" />
+                    <f:ajax execute="@form" event="slide" />
                 </ace:sliderEntry>                
                 <h:outputText id="xValue" value="${rowBean.x}"/>
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
                     <f:validateBean/>
-                    <f:ajax render="errMsg" />
+                    <f:ajax render="errMsg" execute="@form" />
                 </h:inputText>
                 <br/>
                 <h:message id="errMsg" for="Y"/>
@@ -33,7 +33,7 @@
                 <h:outputLabel for="R" value="Коэффициент R: " />
                 <ace:sliderEntry onSlide="redraw()" onSlideEnd="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
                     <ace:ajax event="slide" render="rValue"/>
-                    <f:ajax execute="@this" event="slide" />
+                    <f:ajax execute="@form" event="slide" />
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
