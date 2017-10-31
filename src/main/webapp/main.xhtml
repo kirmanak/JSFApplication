@@ -17,17 +17,19 @@
             <h:form id="mainForm">
                 <h:outputLabel for="X" value="Координата X:" />
                 <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
-                    <ace:ajax render="xValue" event="slide" />
+                    <ace:ajax render="xValue" event="slide"/>
                 </ace:sliderEntry>                
                 <h:outputText id="xValue" value="${rowBean.x}"/>
                 <br/>
+                <h:commandButton style="display: none;" id="hiddenButton">
+                    <ace:ajax execute="X" render="xValue" />
+                </h:commandButton>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
-                    <f:ajax render="errMsg"/>
-                    <f:validateBean/>
+                    <ace:ajax />
                 </h:inputText>
                 <br/>
-                <h:message id="errMsg" for="Y"/>
+                <h:message for="Y"/>
                 <br/>
                 <h:outputLabel for="R" value="Коэффициент R: " />
                 <ace:sliderEntry onSlide="redraw()" onSlideEnd="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
@@ -35,17 +37,17 @@
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
-                <h:commandButton value="Проверить" id="button" >
+                <h:commandButton value="Проверить" id="button"  >
+                    <ace:ajax render=":resultTable latestRequest" execute="@form" />
                     <f:actionListener binding="#{rowBean.process()}" />
-                    <ace:ajax execute="@form" render=":resultTable lastRequest" />
                 </h:commandButton> 
-                <h:outputText id="lastRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>
+                <h:outputText id="latestRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>
             </h:form>
         </h:panelGrid> 
         <h:panelGroup id="resultTable">
             <h:commandButton rendered="#{tableBean.list.size() != 0}" value="Очистить результаты">
                 <f:actionListener binding="#{tableBean.removeSession()}"/>
-                <f:ajax render="resultTable"/>
+                <ace:ajax render="resultTable"/>
             </h:commandButton>
             <h:dataTable value="${tableBean.list}" var="rowBean" rendered="#{tableBean.list.size() != 0}">
                 <h:column>
@@ -72,6 +74,7 @@
             const xId = "mainForm:X";
             const rValueId = "mainForm:rValue";
             const buttonId = "mainForm:button";
+            const hiddenButtonId = "mainForm:hiddenButton";
             const myGraph = new Graph({
                 canvasId: canvasId,
                 minX: -2,
@@ -84,6 +87,7 @@
                     var answer = myGraph.getClickCoords(evt);
                     document.getElementById(yId).value = answer.y;
                     ice.ace.instance(xId).setValue(Math.round(answer.x));
+                    document.getElementById(hiddenButtonId).click();
                     document.getElementById(buttonId).click();
                 }
             );
