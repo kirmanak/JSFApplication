@@ -35,8 +35,7 @@
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
-                <h:commandButton value="Проверить" id="button" process="@form" action="#{rowBean.process()}" 
-                    onclick="drawAPoint(${rowBean.x}, ${rowBean.y}, ${rowBean.result}, myGraph)" >
+                <h:commandButton value="Проверить" id="button" process="@form" action="#{rowBean.process()}">
                     <ace:ajax render="resultTable"/>
                 </h:commandButton> 
             </h:form>
@@ -56,8 +55,11 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Result</f:facet>
-                ${rowBean.result}
+                ${rowBean.result ? "Принадлежит!":"Не принадлежит!"}
             </h:column>
+            <h:outputScript>
+                drawAPoint(${rowBean.x}, ${rowBean.y}, ${rowBean.result}, myGraph);
+            </h:outputScript>
         </h:dataTable>
         <h:outputScript target="body">
             const canvasId = "myCanvas";

@@ -2,6 +2,8 @@ package com.kirmanak;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ExternalContext;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.DecimalMax;
@@ -25,7 +27,6 @@ import java.io.Serializable;
 @ManagedBean
 @RequestScoped
 public class RowBean implements Serializable {
-    private static final long serialVersionUID = -1798070786993154676L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
@@ -54,7 +55,7 @@ public class RowBean implements Serializable {
 
     public void process() {
       setResult();
-      // ORM.insert(this);
+      // ORM.insert(this, FacesContext.getExternalContext().getSessionId(false));
     }
 
     public void setResult() {

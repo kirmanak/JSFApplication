@@ -17,8 +17,13 @@ public class TableBean implements Serializable {
     }
 
     public List<RowBean> getList () {
-        list.clear();
-        // list.addAll(ORM.getRows(this));
+        /*
+        final List<RowBean> results = ORM.getRows(FacesContext.getExternalContext().getSessionId(false)); 
+        if (results != null) {
+            list.clear();
+            list.addAll(results);
+        }
+        */
     	return list;
     }
 }
