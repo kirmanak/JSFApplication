@@ -27,6 +27,7 @@ import java.io.Serializable;
 @ManagedBean
 @RequestScoped
 public class RowBean implements Serializable {
+    private static final int accuracyR = 100;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
@@ -49,6 +50,13 @@ public class RowBean implements Serializable {
     @DecimalMax(value = "5.0", message = "R should be 5 or less.")
     @Column(name = "r", unique = false, nullable = false, length = 100)
     private double R = 2.0;
+
+    @NotNull(message = "R can't be empty.")
+    @DecimalMin(value = "200", message = "R should be 2 or more.")
+    @DecimalMax(value = "500", message = "R should be 5 or less.")
+    @Column(name = "integerR", unique = false, nullable = false, length = 100)
+    private int integerR = 200;
+
 
     @Column(name = "res", unique = false, nullable = false, length = 100)
     private boolean result = false;
@@ -81,15 +89,25 @@ public class RowBean implements Serializable {
       return R;
     }
 
-    public void setX (int X) {
+    public int getIntegerR () {
+      return integerR;
+    }
+
+    public void setX (final int X) {
       this.X = X;
     }
 
-    public void setY (double Y) {
+    public void setY (final double Y) {
       this.Y = Y;
     }
 
-    public void setR (double R) {
+    public void setIntegerR (final int R) {
+      this.integerR = R;
+      setR((double) integerR/accuracyR);
+    }
+
+    public void setR (final double R) {
       this.R = R;
+      setIntegerR((int) Math.round(R*accuracyR));
     }
 }

@@ -7,9 +7,9 @@ function drawAPoint(X, Y, result, myGraph) {
         myGraph.drawPoint(X, Y, 'orange');
     }
 }
-function draw(rId,myGraph) {
+function draw(rValueId, myGraph) {
     myGraph.context.clearRect(0, 0, myGraph.canvas.width, myGraph.canvas.height);
-    const R = ice.ace.instance(rId).getValue();
+    const R = Number(document.getElementById(rValueId).innerHTML);
     myGraph.drawXAxis();
     myGraph.drawYAxis();
     myGraph.drawEquationX(function (x) {
