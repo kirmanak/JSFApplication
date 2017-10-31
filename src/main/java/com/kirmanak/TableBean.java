@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 @ManagedBean
 @SessionScoped
 public class TableBean implements Serializable {
@@ -20,8 +22,20 @@ public class TableBean implements Serializable {
     public TableBean () {
       list = new ArrayList<>();
       final RowBean example = new RowBean();
+      example.setX(1);
+      example.setY(3.33);
+      example.setR(2.25);
       list.add(example);
+      final RowBean secondExample = new RowBean();
+      secondExample.setX(-1);
+      secondExample.setY(-1);
+      secondExample.setR(5);
+      list.add(secondExample);
       sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
+    }
+
+    public String getListAsJson () {
+        return new Gson().toJson(getList());
     }
 
     public List<RowBean> getList () {

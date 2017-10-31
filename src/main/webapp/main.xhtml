@@ -23,8 +23,8 @@
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
-                    <f:ajax render="errMsg"/>
                     <f:validateBean/>
+                    <f:ajax render="errMsg"/>
                 </h:inputText>
                 <br/>
                 <h:message id="errMsg" for="Y"/>
@@ -41,7 +41,7 @@
                 </h:commandButton> 
                 <h:outputText id="lastRequest" value="Last request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>
             </h:form>
-        </h:panelGrid>
+        </h:panelGrid> 
         <h:panelGroup id="resultTable">
             <h:dataTable value="${tableBean.list}" var="rowBean" rendered="#{tableBean.list.size() != 0}">
                 <h:column>
@@ -60,9 +60,6 @@
                     <f:facet name="header">Result</f:facet>
                     ${rowBean.result ? "Принадлежит!":"Не принадлежит!"}
                 </h:column>
-                <h:outputScript>
-                    drawAPoint(${rowBean.x}, ${rowBean.y}, ${rowBean.result}, myGraph);
-                </h:outputScript>
             </h:dataTable>
         </h:panelGroup>
         <h:outputScript target="body">
@@ -88,6 +85,11 @@
             );
             function redraw() {
                 draw(rValueId, myGraph);
+                const points = #{tableBean.listAsJson};
+                for (let i = 0; i &lt; points.length; i++) {
+                    const point = points[i];
+                    drawAPoint(point.X, point.Y, point.result, myGraph);
+                }
             }
             redraw();
         </h:outputScript>

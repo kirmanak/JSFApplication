@@ -1,5 +1,4 @@
 function drawAPoint(X, Y, result, myGraph) {
-    alert("Point is ("+X+";"+Y+"), result="+result);
     if (result == true) {
         myGraph.drawPoint(X, Y, 'green');
     }
@@ -9,9 +8,9 @@ function drawAPoint(X, Y, result, myGraph) {
 }
 function draw(rValueId, myGraph) {
     myGraph.context.clearRect(0, 0, myGraph.canvas.width, myGraph.canvas.height);
-    const R = Number(document.getElementById(rValueId).innerHTML);
     myGraph.drawXAxis();
     myGraph.drawYAxis();
+    const R = Number(document.getElementById(rValueId).innerHTML);
     myGraph.drawEquationX(function (x) {
         const y = Number(x) + Number(x) - Number(R);
         if (x < 0 || x > R/2)
