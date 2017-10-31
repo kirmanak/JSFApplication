@@ -21,7 +21,6 @@ public class TableBean implements Serializable {
 
     public TableBean () {
       list = new ArrayList<>();
-      /*
       final RowBean example = new RowBean();
       example.setX(1);
       example.setY(3.33);
@@ -32,7 +31,6 @@ public class TableBean implements Serializable {
       secondExample.setY(-1);
       secondExample.setR(5);
       list.add(secondExample);
-      */
       sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
     }
 

@@ -23,12 +23,12 @@
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
-                    <f:validateBean/>
                     <f:ajax render="errMsg"/>
+                    <f:validateBean/>
                 </h:inputText>
                 <br/>
                 <h:message id="errMsg" for="Y"/>
-                <br />
+                <br/>
                 <h:outputLabel for="R" value="Коэффициент R: " />
                 <ace:sliderEntry onSlide="redraw()" onSlideEnd="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
                     <ace:ajax event="slide" render="rValue" />
@@ -36,14 +36,15 @@
                 <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
                 <h:commandButton value="Проверить" id="button" >
-                    <f:actionListener binding="#{rowBean.process()}"/>
+                    <f:actionListener binding="#{rowBean.process()}" />
                     <ace:ajax execute="@form" render=":resultTable lastRequest" />
                 </h:commandButton> 
-                <h:outputText id="lastRequest" value="Last request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>
+                <h:outputText id="lastRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>
             </h:form>
         </h:panelGrid> 
         <h:panelGroup id="resultTable">
-            <h:commandButton rendered="#{tableBean.list.size() != 0}" action="#{tableBean.removeSession()}" value="Очистить результаты">
+            <h:commandButton rendered="#{tableBean.list.size() != 0}" value="Очистить результаты">
+                <f:actionListener binding="#{tableBean.removeSession()}"/>
                 <f:ajax render="resultTable"/>
             </h:commandButton>
             <h:dataTable value="${tableBean.list}" var="rowBean" rendered="#{tableBean.list.size() != 0}">

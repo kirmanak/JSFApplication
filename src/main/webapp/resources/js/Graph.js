@@ -20,7 +20,7 @@ function Graph(config) {
     this.unitY = this.canvas.height / this.rangeY;
     this.centerY = Math.round(Math.abs(this.minY / this.rangeY) * this.canvas.height);
     this.centerX = Math.round(Math.abs(this.minX / this.rangeX) * this.canvas.width);
-    this.iteration = (this.maxX - this.minX) / 10000;
+    this.iteration = (this.maxX - this.minX) / 1000;
     this.scaleX = this.canvas.width / this.rangeX;
     this.scaleY = this.canvas.height / this.rangeY;
 
