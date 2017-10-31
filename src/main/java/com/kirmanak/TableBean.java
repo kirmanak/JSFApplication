@@ -54,8 +54,7 @@ public class TableBean implements Serializable {
     }
 
     @PreDestroy
-    private void removeSession () {
-        if (true) throw new RuntimeException("Hello, world!");
+    public void removeSession () {
         /*
         ORM.removeSession(getSessionId());
         */
