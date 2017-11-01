@@ -35,17 +35,18 @@
                 <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
                 <h:commandButton onclick="redraw()" value="Проверить" id="button"  >
-                    <ace:ajax render=":resultTable" execute="X Y R"/> 
+                    <ace:ajax render=":resultTable latestRequest" execute="X Y R"/> 
                     <f:actionListener binding="#{rowBean.process()}" />
                 </h:commandButton> 
-                <!-- <h:outputText id="latestRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>  -->
+                <h:outputText id="latestRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>
             </h:form>
         </h:panelGrid> 
         <h:form id="hiddenForm">
             <h:inputHidden id="X" value="#{rowBean.x}"/>
             <h:inputHidden id="Y" value="#{rowBean.y}"/>
-            <h:commandButton id="hiddenButton" style="display: none;">
-                <f:ajax execute="X Y"/>
+            <h:commandButton id="hiddenButton" onclick="redraw()" style="display: none;">
+                <f:ajax render="mainForm:latestRequest" execute="X Y"/>
+                <f:actionListener binding="#{rowBean.process()}"/>
             </h:commandButton>
         </h:form>
         <h:panelGroup id="resultTable">
