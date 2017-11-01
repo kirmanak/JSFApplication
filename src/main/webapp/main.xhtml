@@ -54,7 +54,7 @@
         <h:panelGroup id="resultTable">
             <h:form>
                 <h:commandButton onclick="redraw()" value="Очистить результаты">
-                    <f:actionListener binding="#{tableBean.removeSession()}"/>
+                    <f:actionListener binding="#{tableBean.clear()}"/>
                     <ace:ajax render=":resultTable"/>
                 </h:commandButton>
             </h:form>

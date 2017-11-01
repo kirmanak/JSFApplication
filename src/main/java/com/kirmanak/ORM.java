@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ORM {
 	public static void insert(final RowBean row) {
-        final String sessionId = row.getSessionId();
 		final Session session = HibernateUtil.getSessionFactory().openSession();
     	session.beginTransaction();
      	// session.save(row);
@@ -20,15 +19,12 @@ public class ORM {
 	public static List<RowBean> getRows (final String sessionId) {
         final Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        // load every row connected with current session
         final List<RowBean> results = session.createQuery("from RowBean ").list();
         session.getTransaction().commit();
         HibernateUtil.shutdown(); 
         return results;
 	}
 
-	public static void removeSession (final String sessionId) {
-		// here you have to remove the session and
-		// each row, which connected to the session
+	public static void clear () {
 	}
 }

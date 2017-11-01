@@ -16,7 +16,6 @@ import java.io.Serializable;
 @RequestScoped
 public class RowBean implements Serializable {
     private static final int accuracyR = 100;
-    private final String sessionId;
 
     @NotNull(message = "X can't be empty.")
     @DecimalMin(value = "-2.0", message = "X should be -2 or more.")
@@ -40,17 +39,9 @@ public class RowBean implements Serializable {
 
     private boolean result = false;
 
-    public RowBean () {
-      sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
-    }
-
     public void process() {
       setResult();
       // ORM.insert(this);
-    }
-
-    public String getSessionId () {
-      return this.sessionId;
     }
 
     public void setResult() {

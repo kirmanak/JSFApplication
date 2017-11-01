@@ -1,7 +1,7 @@
 package com.kirmanak;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ExternalContext;
 
@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 public class TableBean implements Serializable {
     private final List<RowBean> list;
-    private final String sessionId;
 
     public TableBean () {
       list = new ArrayList<>();
@@ -31,7 +30,6 @@ public class TableBean implements Serializable {
       secondExample.setY(-1);
       secondExample.setR(5);
       list.add(secondExample);
-      sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
     }
 
     public String getListAsJson () {
@@ -40,7 +38,7 @@ public class TableBean implements Serializable {
 
     public List<RowBean> getList () {
         /*
-        final List<RowBean> results = ORM.getRows(sessionId); 
+        final List<RowBean> results = ORM.getRows(); 
         if (results != null) {
             list.clear();
             list.addAll(results);
@@ -49,14 +47,10 @@ public class TableBean implements Serializable {
     	return list;
     }
 
-    public String getSessionId () {
-        return this.sessionId;
-    }
-
     @PreDestroy
-    public void removeSession () {
+    public void clear () {
         /*
-        ORM.removeSession(getSessionId());
+        ORM.clear();
         */
     }
 
