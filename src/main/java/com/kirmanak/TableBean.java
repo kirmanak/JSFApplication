@@ -23,8 +23,8 @@ public class TableBean implements Serializable {
       list = new ArrayList<>();
       final RowBean example = new RowBean();
       example.setX(1);
-      example.setY(3.33);
-      example.setR(2.25);
+      example.setY(-2);
+      example.setR(2);
       list.add(example);
       final RowBean secondExample = new RowBean();
       secondExample.setX(-1);

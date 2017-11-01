@@ -101,8 +101,7 @@
             function redraw() {
                 draw(rValueId, myGraph);
                 const points = #{tableBean.listAsJson};
-                for (let i = 0; i &lt; points.length; i++) {
-                    const point = points[i];
+                for (const point of points) {
                     drawAPoint(point.X, point.Y, point.result, myGraph);
                 }
             }
