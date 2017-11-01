@@ -35,7 +35,7 @@
                 <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
                 <h:commandButton onclick="redraw()" value="Проверить" id="button"  >
-                    <ace:ajax render=":resultTable latestRequest" execute="X Y R"/> 
+                    <ace:ajax render=":resultTable" execute="X Y R"/> 
                     <f:actionListener binding="#{rowBean.process()}" />
                 </h:commandButton> 
                 <!-- <h:outputText id="latestRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>  -->
