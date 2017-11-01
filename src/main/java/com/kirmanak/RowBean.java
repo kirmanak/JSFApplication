@@ -4,11 +4,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ExternalContext;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Max;
 
 import java.io.Serializable;
 
@@ -16,25 +11,9 @@ import java.io.Serializable;
 @RequestScoped
 public class RowBean implements Serializable {
     private static final int accuracyR = 100;
-
-    @NotNull(message = "X can't be empty.")
-    @DecimalMin(value = "-2.0", message = "X should be -2 or more.")
-    @DecimalMax(value = "2", message = "X should be 2 or less.")
     private double X = 0.0;
-
-    @NotNull(message = "Y can't be empty.")
-    @DecimalMin(value = "-5.0", message = "Y should be -5 or more.")
-    @DecimalMax(value = "5.0", message = "Y should be 5 or less.")
     private double Y = 0.0;
-
-    @NotNull(message = "R can't be empty.")
-    @DecimalMin(value = "2.0", message = "R should be 2 or more.")
-    @DecimalMax(value = "5.0", message = "R should be 5 or less.")
     private double R = 2.0;
-
-    @NotNull(message = "R can't be empty.")
-    @DecimalMin(value = "200", message = "IntegerR should be 200 or more.")
-    @DecimalMax(value = "500", message = "IntegerR should be 500 or less.")
     private int integerR = 200;
 
     private boolean result = false;

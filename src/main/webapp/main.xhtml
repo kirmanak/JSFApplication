@@ -23,11 +23,11 @@
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
-                    <f:validateBean />
-                    <ace:ajax render="Y" execute="Y"/>
+                    <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
+                    <ace:ajax render="errMsg" execute="Y"/>
                 </h:inputText>
                 <br/>
-                <h:message for="Y"/>
+                <h:message style="color: red" id="errMsg" for="Y"/>
                 <br/>
                 <h:outputLabel for="R" value="Коэффициент R: " />
                 <ace:sliderEntry onSlide="redraw()" onSlideEnd="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
