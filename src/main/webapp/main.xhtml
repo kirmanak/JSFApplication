@@ -23,7 +23,8 @@
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
-                    <ace:ajax render="latestRequest Y" execute="Y"/>
+                    <f:validateBean />
+                    <ace:ajax render="Y" execute="Y"/>
                 </h:inputText>
                 <br/>
                 <h:message for="Y"/>
