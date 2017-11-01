@@ -44,8 +44,9 @@
         <h:form id="hiddenForm">
             <h:inputHidden id="X" value="#{rowBean.x}"/>
             <h:inputHidden id="Y" value="#{rowBean.y}"/>
+            <h:inputHidden id="Y" value="#{rowBean.r}"/>
             <h:commandButton id="hiddenButton" onclick="redraw()" style="display: none;">
-                <f:ajax render="mainForm:latestRequest :resultTable" execute="X Y"/>
+                <f:ajax render="mainForm:latestRequest :resultTable" execute="X Y R"/>
                 <f:actionListener binding="#{rowBean.process()}"/>
             </h:commandButton>
         </h:form>
@@ -91,7 +92,7 @@
             });
             myGraph.canvas.addEventListener("click", function (evt) {
                     var answer = myGraph.getClickCoords(evt);
-                    document.getElementById(xId).value = Math.round(answer.x);
+                    document.getElementById(xId).value = answer.x;
                     document.getElementById(yId).value = answer.y;
                     document.getElementById(buttonId).click();
                 }

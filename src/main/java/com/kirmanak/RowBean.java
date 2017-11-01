@@ -40,10 +40,10 @@ public class RowBean implements Serializable {
     private long id;
 
     @NotNull(message = "X can't be empty.")
-    @Min(value = -2, message = "X should be -2 or more.")
-    @Max(value = 2, message = "X should be 2 or less.")
+    @DecimalMin(value = "-2.0", message = "X should be -2 or more.")
+    @DecimalMax(value = "2", message = "X should be 2 or less.")
     @Column(name = "x", unique = true, nullable = false)
-    private int X = 0;
+    private double X = 0.0;
 
     @NotNull(message = "Y can't be empty.")
     @DecimalMin(value = "-5.0", message = "Y should be -5 or more.")
@@ -86,7 +86,7 @@ public class RowBean implements Serializable {
       return result; 
     }
 
-    public int getX () {
+    public double getX () {
       return X;
     }
 
@@ -102,7 +102,7 @@ public class RowBean implements Serializable {
       return integerR;
     }
 
-    public void setX (final int X) {
+    public void setX (final double X) {
       this.X = X;
     }
 
