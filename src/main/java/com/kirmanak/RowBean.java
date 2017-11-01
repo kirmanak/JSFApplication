@@ -42,13 +42,13 @@ public class RowBean implements Serializable {
     @NotNull(message = "X can't be empty.")
     @DecimalMin(value = "-2.0", message = "X should be -2 or more.")
     @DecimalMax(value = "2", message = "X should be 2 or less.")
-    @Column(name = "x", unique = true, nullable = false)
+    @Column(name = "x", unique = false, nullable = false)
     private double X = 0.0;
 
     @NotNull(message = "Y can't be empty.")
     @DecimalMin(value = "-5.0", message = "Y should be -5 or more.")
     @DecimalMax(value = "5.0", message = "Y should be 5 or less.")
-    @Column(name = "y", unique = true, nullable = false, length = 100)
+    @Column(name = "y", unique = false, nullable = false, length = 100)
     private double Y = 0.0;
 
     @NotNull(message = "R can't be empty.")
@@ -78,7 +78,7 @@ public class RowBean implements Serializable {
     public void setResult() {
       this.result = ((X*X+Y*Y <= R*R/4) && (X <= 0) && (Y >= 0)) ||
         ((X <= 0) && (X >= -R/2) && (Y <= 0) && (Y >= -R)) ||
-        ((X >= 0) && (Y <= 0) && (Y <= X * 2 + R));
+        ((X >= 0) && (Y <= 0) && (Y <= X * 2 - R));
     }
 
     public boolean getResult() {

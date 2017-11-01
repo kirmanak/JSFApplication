@@ -44,8 +44,8 @@
         <h:form id="hiddenForm">
             <h:inputHidden id="X" value="#{rowBean.x}"/>
             <h:inputHidden id="Y" value="#{rowBean.y}"/>
-            <h:inputHidden id="Y" value="#{rowBean.r}"/>
-            <h:commandButton id="hiddenButton" onclick="redraw()" style="display: none;">
+            <h:inputHidden id="R" value="#{rowBean.r}"/>
+            <h:commandButton id="hiddenButton" style="display: none;">
                 <f:ajax render="mainForm:latestRequest :resultTable" execute="X Y R"/>
                 <f:actionListener binding="#{rowBean.process()}"/>
             </h:commandButton>
@@ -95,6 +95,7 @@
                     document.getElementById(xId).value = answer.x;
                     document.getElementById(yId).value = answer.y;
                     document.getElementById(buttonId).click();
+                    redraw();
                 }
             );
             function redraw() {
