@@ -23,7 +23,7 @@
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
                 <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
-                    <ace:ajax render="@none" execute="Y"/>
+                    <ace:ajax render="latestRequest Y" execute="Y"/>
                 </h:inputText>
                 <br/>
                 <h:message for="Y"/>
@@ -38,12 +38,19 @@
                     <ace:ajax render=":resultTable latestRequest" execute="X Y R"/> 
                     <f:actionListener binding="#{rowBean.process()}" />
                 </h:commandButton> 
-                <h:outputText id="latestRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/> 
+                <!-- <h:outputText id="latestRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>  -->
             </h:form>
         </h:panelGrid> 
+        <h:form id="hiddenForm">
+            <h:inputHidden id="X" value="#{rowBean.x}"/>
+            <h:inputHidden id="Y" value="#{rowBean.y}"/>
+            <h:commandButton id="hiddenButton" style="display: none;">
+                <f:ajax execute="X Y"/>
+            </h:commandButton>
+        </h:form>
         <h:panelGroup id="resultTable">
             <h:form>
-                <h:commandButton value="Очистить результаты">
+                <h:commandButton onclick="redraw()" value="Очистить результаты">
                     <f:actionListener binding="#{tableBean.removeSession()}"/>
                     <ace:ajax render=":resultTable"/>
                 </h:commandButton>
@@ -85,9 +92,14 @@
             myGraph.canvas.addEventListener("click", function (evt) {
                     var answer = myGraph.getClickCoords(evt);
                     document.getElementById(yId).value = answer.y;
+                    /*
                     ice.ace.instance(xId).setValue(Math.round(answer.x));
                     document.getElementById(xValueId).innerHTML = ice.ace.instance(xId).getValue();
                     document.getElementById(buttonId).click();
+                    */
+                    document.getElementById("hiddenForm:X").value = Math.round(answer.x);
+                    document.getElementById("hiddenForm:Y").value = Math.round(answer.y);
+                    document.getElementById("hiddenForm:hiddenButton").click();
                 }
             );
             function redraw() {
