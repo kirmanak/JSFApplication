@@ -1,3 +1,5 @@
+package com.kirmanak;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,28 +19,21 @@ public class RowEntity {
     private long id;
 	
     @Column(name = "x", unique = false, nullable = false)
-    private double X = 0.0;
+    private double X;
 
     @Column(name = "y", unique = false, nullable = false)
-    private double Y = 0.0;
+    private double Y;
 
     @Column(name = "r", unique = false, nullable = false)
-    private double R = 2.0;
+    private double R;
 
     @Column(name = "integerR", unique = false, nullable = false)
-    private int integerR = 200;
+    private int integerR;
 
-    @Column(name = "res", unique = false, nullable = false)
-    private boolean result = false;
-
-    public void setResult() {
-      this.result = ((X*X+Y*Y <= R*R/4) && (X <= 0) && (Y >= 0)) ||
-        ((X <= 0) && (X >= -R/2) && (Y <= 0) && (Y >= -R)) ||
-        ((X >= 0) && (Y <= 0) && (Y >= X * 2 - R));
-    }
+    @Column(name = "result", unique = false, nullable = false)
+    private boolean result;
 
     public boolean getResult() {
-      setResult();
       return result; 
     }
 
@@ -57,6 +52,11 @@ public class RowEntity {
     public int getIntegerR () {
       return integerR;
     }
+
+    public void setResult(final boolean result) {
+      this.result = result;
+    }
+
 
     public void setX (final double X) {
       this.X = X;

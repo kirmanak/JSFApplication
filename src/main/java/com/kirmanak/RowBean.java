@@ -19,8 +19,13 @@ public class RowBean implements Serializable {
     private boolean result = false;
 
     public void process() {
-      setResult();
-      // ORM.insert(this);
+      final RowEntity row = new RowEntity();
+      row.setIntegerR(getIntegerR());
+      row.setR(getR());
+      row.setResult(getResult());
+      row.setX(getX());
+      row.setY(getY());
+      ORM.insert(row);
     }
 
     public void setResult() {

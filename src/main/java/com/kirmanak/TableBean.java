@@ -20,16 +20,6 @@ public class TableBean implements Serializable {
 
     public TableBean () {
       list = new ArrayList<>();
-      final RowBean example = new RowBean();
-      example.setX(1);
-      example.setY(-2);
-      example.setR(2);
-      list.add(example);
-      final RowBean secondExample = new RowBean();
-      secondExample.setX(-1);
-      secondExample.setY(-1);
-      secondExample.setR(5);
-      list.add(secondExample);
     }
 
     public String getListAsJson () {
@@ -37,21 +27,23 @@ public class TableBean implements Serializable {
     }
 
     public List<RowBean> getList () {
-        /*
-        final List<RowBean> results = ORM.getRows(); 
+        final List<RowEntity> results = ORM.getRows(); 
         if (results != null) {
             list.clear();
-            list.addAll(results);
+            for (final RowEntity entity: results) {
+              final RowBean bean = new RowBean();
+              bean.setR(entity.getR());
+              bean.setX(entity.getX());
+              bean.setY(entity.getY());
+              list.add(bean);
+            }
         }
-        */
     	return list;
     }
 
     @PreDestroy
     public void clear () {
-        /*
         ORM.clear();
-        */
     }
 
 }
