@@ -30,8 +30,9 @@
                 <h:message style="color: red" id="errMsg" for="Y"/>
                 <br/>
                 <h:outputLabel for="R" value="Коэффициент R: " />
-                <ace:sliderEntry onSlide="redraw()" onSlideEnd="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
-                    <ace:ajax event="slide" render="rValue" execute="R" />
+                <ace:sliderEntry onSlideEnd="redraw()" onSlide="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
+                    <ace:ajax event="slideEnd" render="@all" execute="R" />
+                    <ace:ajax event="slide" render="@all" execute="R" />
                 </ace:sliderEntry>                
                 <h:outputText id="rValue" value="${rowBean.r}" />
                 <br />
@@ -81,7 +82,6 @@
             var canvasId = "myCanvas";
             var yId = "hiddenForm:Y";
             var xId = "hiddenForm:X";
-            var rValueId = "mainForm:rValue";
             var buttonId = "hiddenForm:hiddenButton";
             var myGraph = new Graph({
                 canvasId: canvasId,
@@ -100,7 +100,7 @@
                 }
             );
             function redraw() {
-                draw(rValueId, myGraph);
+                draw(Number(ice.ace.instance('mainForm:R').getValue()/100), myGraph);
                 const points = #{tableBean.listAsJson};
                 for (const point of points) {
                     drawAPoint(point.X, point.Y, point.result, myGraph);

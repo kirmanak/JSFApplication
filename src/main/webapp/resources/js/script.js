@@ -6,11 +6,10 @@ function drawAPoint(X, Y, result, myGraph) {
         myGraph.drawPoint(X, Y, 'orange');
     }
 }
-function draw(rValueId, myGraph) {
+function draw(R, myGraph) {
     myGraph.context.clearRect(0, 0, myGraph.canvas.width, myGraph.canvas.height);
     myGraph.drawXAxis();
     myGraph.drawYAxis();
-    const R = Number(document.getElementById(rValueId).innerHTML);
     myGraph.drawEquationX(function (x) {
         const y = Number(x) + Number(x) - Number(R);
         if (x < 0 || x > R/2)

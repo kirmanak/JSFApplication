@@ -2,8 +2,6 @@ package com.kirmanak;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ExternalContext;
 
 import javax.annotation.PreDestroy;
 

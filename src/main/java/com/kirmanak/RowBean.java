@@ -2,8 +2,6 @@ package com.kirmanak;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ExternalContext;
 
 import java.io.Serializable;
 
