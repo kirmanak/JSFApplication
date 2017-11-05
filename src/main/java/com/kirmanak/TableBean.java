@@ -35,6 +35,7 @@ public class TableBean implements Serializable {
               bean.setR(entity.getR());
               bean.setX(entity.getX());
               bean.setY(entity.getY());
+              bean.countResult();
               list.add(bean);
             }
         }
