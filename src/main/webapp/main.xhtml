@@ -12,54 +12,78 @@
     </h:head>
     <h:body>
         <h:link outcome="index" value="Стартовая страница" />
-        <h:panelGrid columns="2">
-            <canvas id="myCanvas" width="400" height="400"></canvas>
-            <h:form id="mainForm">
-                <h:outputLabel for="X" value="Координата X:" />
-                <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
-                    <ace:ajax render="xValue" event="slide" execute="X"/>
-                </ace:sliderEntry>                
-                <h:outputText id="xValue" value="${rowBean.x}"/>
-                <br/>
-                <h:outputLabel for="Y" value="Координата Y:" />
-                <h:inputText autocompvare="off" id="Y" value="#{rowBean.y}">
-                    <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
-                    <ace:ajax render="errMsg" execute="Y"/>
-                </h:inputText>
-                <br/>
-                <h:message style="color: red" id="errMsg" for="Y"/>
-                <br/>
-                <h:outputLabel for="R" value="Коэффициент R: " />
-                <ace:sliderEntry onSlideEnd="redraw()" onSlide="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
-                    <ace:ajax event="slideEnd" render="@all" execute="R" />
-                    <ace:ajax event="slide" render="@all" execute="R" />
-                </ace:sliderEntry>                
-                <h:outputText id="rValue" value="${rowBean.r}" />
-                <br />
-                <h:commandButton onclick="redraw()" value="Проверить" id="button"  >
-                    <ace:ajax render="@all" execute="X Y R"/> 
-                    <f:actionListener binding="#{rowBean.process()}" />
-                </h:commandButton> 
-                <h:outputText id="latestRequest" value="Latest request: ${rowBean.x} ${rowBean.y} ${rowBean.r} ${rowBean.result}"/>
-            </h:form>
-        </h:panelGrid> 
+        <canvas id="myCanvas" width="400" height="400"></canvas>
+        <h:form id="mainForm">
+            <h:outputLabel for="X" value="Координата X:" />
+            <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
+                <ace:ajax render="xValue" event="slide" execute="X"/>
+            </ace:sliderEntry>                
+            <h:outputText id="xValue" value="${rowBean.x}"/>
+            <br/>
+            <h:outputLabel for="Y" value="Координата Y:" />
+            <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
+                <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
+                <ace:ajax render="errMsg" execute="Y"/>
+            </h:inputText>
+            <br/>
+            <h:message style="color: red" id="errMsg" for="Y"/>
+            <br/>
+            <h:outputLabel for="R" value="Коэффициент R: " />
+            <ace:sliderEntry onSlideEnd="redraw()" id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
+                <ace:ajax event="slideEnd" render=":hiddenForm rValue" execute="R" />
+            </ace:sliderEntry>                
+            <h:outputText id="rValue" value="${rowBean.r}" />
+            <br />
+            <h:commandButton onclick="redraw()" value="Проверить" id="button"  >
+                <ace:ajax render=":results" execute="X Y R"/> 
+                <f:actionListener binding="${rowBean.process()}" />
+            </h:commandButton> 
+        </h:form>
         <h:form id="hiddenForm">
             <h:inputHidden id="X" value="#{rowBean.x}"/>
             <h:inputHidden id="Y" value="#{rowBean.y}"/>
-            <h:inputHidden id="R" value="#{rowBean.r}"/>
+            <h:inputHidden id="R" value="${rowBean.r}"/>
             <h:commandButton id="hiddenButton" style="display: none;">
-                <f:ajax render="@all" execute="X Y R"/>
-                <f:actionListener binding="#{rowBean.process()}"/>
+                <ace:ajax render=":results" execute="X Y R"/>
+                <f:actionListener binding="${rowBean.process()}"/>
             </h:commandButton>
         </h:form>
-        <h:panelGroup id="resultTable">
-            <h:form>
-                <h:commandButton onclick="redraw()" value="Очистить результаты">
-                    <f:actionListener binding="#{tableBean.clear()}"/>
-                    <ace:ajax render="@all"/>
-                </h:commandButton>
-            </h:form>
-            <h:dataTable value="${tableBean.list}" var="rowBean" rendered="#{tableBean.list.size() != 0}">
+        <h:outputScript>
+            // some identifiers 
+            const canvasId = "myCanvas";
+            const yId = "hiddenForm:Y";
+            const xId = "hiddenForm:X";
+            const buttonId = "hiddenForm:hiddenButton";
+            const rId = "mainForm:R";
+
+            // business logic
+            const accuracyR = ${rowBean.accuracyR};
+            const R = ice.ace.instance(rId);
+            const myGraph = new Graph({
+                canvasId: canvasId,
+                minX: -3,
+                minY: -6,
+                maxX: 3,
+                maxY: 6,
+                unitsPerTick: 1
+            });
+            myGraph.canvas.addEventListener("click", function (evt) {
+                    const answer = myGraph.getClickCoords(evt);
+                    document.getElementById(xId).value = answer.x;
+                    document.getElementById(yId).value = answer.y;
+                    document.getElementById(buttonId).click();
+                    redraw();
+                }
+            );
+        </h:outputScript>
+        <h:form>
+            <h:commandButton onclick="redraw()" value="Очистить результаты">
+                <f:actionListener binding="${tableBean.clear()}"/>
+                <ace:ajax render=":results"/>
+            </h:commandButton>
+        </h:form>
+        <h:panelGroup id="results">
+            <h:dataTable value="${tableBean.list}" var="rowBean" rendered="${tableBean.list.size() != 0}">
                 <h:column>
                     <f:facet name="header">X</f:facet>
                     ${rowBean.x}
@@ -74,39 +98,19 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Result</f:facet>
-                    ${rowBean.result ? "Принадлежит!":"Не принадлежит!"}
+                    ${rowBean.result ? "Принадлежит":"Не принадлежит"}
                 </h:column>
             </h:dataTable>
+            <h:outputScript>
+                function redraw() {
+                    draw(R.getValue()/accuracyR, myGraph);
+                    const points = ${tableBean.listAsJson};
+                    for (const point of points) {
+                        drawAPoint(point.X, point.Y, point.result, myGraph);
+                    }
+                }
+                redraw();
+            </h:outputScript>
         </h:panelGroup>
-        <h:outputScript target="body">
-            var canvasId = "myCanvas";
-            var yId = "hiddenForm:Y";
-            var xId = "hiddenForm:X";
-            var buttonId = "hiddenForm:hiddenButton";
-            var myGraph = new Graph({
-                canvasId: canvasId,
-                minX: -3,
-                minY: -6,
-                maxX: 3,
-                maxY: 6,
-                unitsPerTick: 1
-            });
-            myGraph.canvas.addEventListener("click", function (evt) {
-                    var answer = myGraph.getClickCoords(evt);
-                    document.getElementById(xId).value = answer.x;
-                    document.getElementById(yId).value = answer.y;
-                    document.getElementById(buttonId).click();
-                    redraw();
-                }
-            );
-            function redraw() {
-                draw(Number(ice.ace.instance('mainForm:R').getValue()/100), myGraph);
-                const points = #{tableBean.listAsJson};
-                for (const point of points) {
-                    drawAPoint(point.X, point.Y, point.result, myGraph);
-                }
-            }
-            redraw();
-        </h:outputScript>
     </h:body>
 </html>

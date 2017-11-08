@@ -3,7 +3,7 @@ function drawAPoint(X, Y, result, myGraph) {
         myGraph.drawPoint(X, Y, 'green');
     }
     else {
-        myGraph.drawPoint(X, Y, 'orange');
+        myGraph.drawPoint(X, Y, 'red');
     }
 }
 function draw(R, myGraph) {

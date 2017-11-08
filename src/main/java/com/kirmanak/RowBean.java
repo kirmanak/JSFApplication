@@ -16,6 +16,10 @@ public class RowBean implements Serializable {
 
     private boolean result = false;
 
+    public int getAccuracyR() {
+      return accuracyR;
+    }
+
     public void process() {
       final RowEntity row = new RowEntity();
       row.setIntegerR(getIntegerR());
