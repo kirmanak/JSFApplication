@@ -7,26 +7,30 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
     <title>Main page</title>
+    <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
     <h:outputScript library="js" name="Graph.js" target="head"/>
     <h:outputScript library="js" name="script.js" target="head"/>
     <h:outputStylesheet library="css" name="styles.css"  />
 </h:head>
 <h:body>
-    <h:panelGroup layout="block" class="container">
-        <h:link class="button linkButton" outcome="index" value="Стартовая страница" />
-        <h:panelGroup layout="block" class="graphics" >
+    <h:panelGroup layout="block" styleClass="container">
+        <h:panelGroup layout="block" styleClass="centerLink">
+            <h:link styleClass="button" outcome="index" value="Стартовая страница" />
+        </h:panelGroup>
+        <h:panelGroup layout="block" styleClass="graphics" >
             <canvas id="myCanvas" width="400" height="400"></canvas>
         </h:panelGroup>
         <h:form id="mainForm">
-            <h:panelGroup layout="block" class="sliders">
+            <h:panelGroup layout="block" styleClass="sliders">
                 <h:outputLabel for="X" value="Координата X:" />
-                <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200" showLabels="true">
+                <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200">
                     <ace:ajax render="xValue" event="slide" execute="X"/>
                 </ace:sliderEntry>
                 <h:outputText id="xValue" value="${rowBean.x}"/>
                 <br/>
                 <h:outputLabel for="Y" value="Координата Y:" />
-                <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}">
+                <br/>
+                <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}" validatorMessage="Y должен быть в промежутке [-5;5]" converterMessage="Y - это число">
                     <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
                     <ace:ajax render="errMsg" execute="Y"/>
                 </h:inputText>
@@ -41,12 +45,12 @@
                 <br />
             </h:panelGroup>
             
-            <h:panelGroup layout="block" class="buttons" id="buttons">
-                <h:commandButton rendered="${tableBean.list.size() != 0}" id="clearButton" value="Очистить результаты" class="button">
+            <h:panelGroup layout="block" styleClass="buttons" id="buttons">
+                <h:commandButton rendered="${tableBean.list.size() != 0}" id="clearButton" value="Очистить результаты" styleClass="button">
                     <f:actionListener binding="${tableBean.clear()}"/>
                     <ace:ajax render=":results buttons" onComplete="redraw(); return true;"/>
                 </h:commandButton>
-                <h:commandButton value="Проверить" id="button" class="button float-btn" >
+                <h:commandButton value="Проверить" id="button" styleClass="button float-btn" >
                     <ace:ajax render=":results buttons" execute="X Y R" onComplete="redraw(); return true;"/>
                     <f:actionListener binding="${rowBean.process()}" />
                 </h:commandButton>
@@ -63,7 +67,7 @@
             </h:commandButton>
         </h:form>
 
-        <h:panelGroup layout="block" id="results" class="results">
+        <h:panelGroup layout="block" id="results" styleClass="results">
             <h:dataTable value="${tableBean.list}" var="rowBean" rendered="${tableBean.list.size() != 0}">
                 <h:column >
                     <f:facet name="header">X</f:facet>

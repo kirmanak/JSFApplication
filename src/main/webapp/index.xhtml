@@ -6,6 +6,7 @@
     <h:head>
         <title>Start page</title>
         <h:outputStylesheet library="css" name="styles.css"  />
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
         <h:outputScript>
             setInterval(function() {
                 document.getElementById("hiddenForm:updatePresentDateTime").click();
@@ -13,7 +14,7 @@
         </h:outputScript>
     </h:head>
    <h:body >
-        <h:panelGroup layout="block" class="header">
+        <h:panelGroup layout="block" styleClass="header">
             <h:outputText value="Пикалов Павел, Камакин Кирилл P3210" />
         </h:panelGroup>
         <!-- Hidden form for every second time update -->
@@ -22,14 +23,14 @@
             <f:ajax render=":presentDateTime" />
         </h:commandButton>
         </h:form>
-        <h:panelGroup layout="block" class="presentDateTime" >
+        <h:panelGroup layout="block" styleClass="presentDateTime" >
             <h:outputText id="presentDateTime" value="#{timeBean.currentDate}">
-                <f:convertDateTime dateStyle="full" pattern="dd.MM.yyyy 'at' HH:mm:ss z"/>
+                <f:convertDateTime dateStyle="full" pattern="dd.MM.yyyy HH:mm:ss z"/>
             </h:outputText>
         </h:panelGroup>
         <br/>
-        <h:panelGroup layout="block" class="mainlink">
-            <h:link outcome="main" value="Основная страница" class="button linkButton" />
+        <h:panelGroup layout="block" styleClass="centerLink">
+            <h:link outcome="main" value="Основная страница" styleClass="button" />
         </h:panelGroup>
 </h:body>
 </html>

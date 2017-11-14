@@ -2,9 +2,13 @@ body {
     background-color: #AFE4F4;
 }
 
-p {
+span, label {
     font-size: 20px;
     font-family: sans-serif;
+}
+
+.centerLink {
+    text-align: center;
 }
 
 .button {
@@ -24,11 +28,6 @@ p {
     background-color: #0570ff;
 }
 
-.linkButton {
-    border-radius: 10px;
-    padding: 17px 17px;
-}
-
 .presentDateTime {
     padding-bottom: 18px;
     padding-top: 18px;
@@ -45,10 +44,6 @@ p {
     text-align: center;
     margin-bottom: 5px;
     padding: 1px;
-}
-
-.mainlink {
-    text-align: center;
 }
 
 .graphics {
@@ -81,8 +76,8 @@ p {
 
 .float-btn {
     float: right;
-    margin-right: 208px;
-    padding: 20px 10px;
+    margin-right: 215px;
+    padding: 20px 65px;
 }
 
 th {
@@ -91,26 +86,20 @@ th {
     border-bottom: 1px solid;
 }
 
+table {
+    margin-left: 247px;
+    border-collapse: collapse;
+}
+
 td {
     padding: 16px;
     text-align: center;
     border-bottom: 1px solid;
+    width: 120px;
 }
 
 tr:hover {
     background-color: rgba(28, 26, 249, 0.2);
-}
-
-table{
-    margin-left:217px;
-    border-collapse:collapse;
-}
-
-.linkButton {
-    border-radius: 10px;
-    font-size: 15px;
-    padding: 15px 15px;
-    margin-left:100px;
 }
 
 #myCanvas {
