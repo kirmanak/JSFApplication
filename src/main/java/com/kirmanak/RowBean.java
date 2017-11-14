@@ -3,12 +3,15 @@ package com.kirmanak;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.io.Serializable;
 
 @ManagedBean
 @RequestScoped
 public class RowBean implements Serializable {
     private static final int accuracyR = 100;
+    private static final int places = 3;
     private double X = 0.0;
     private double Y = 0.0;
     private double R = 2.0;
@@ -58,20 +61,26 @@ public class RowBean implements Serializable {
     }
 
     public void setX (final double X) {
-      this.X = X;
+      this.X = round(X);
     }
 
     public void setY (final double Y) {
-      this.Y = Y;
+      this.Y = round(Y);
     }
 
     public void setIntegerR (final int R) {
       this.integerR = R;
-      this.R = (double) integerR/accuracyR;
+      this.R = round((double) integerR/accuracyR);
     }
 
     public void setR (final double R) {
-      this.R = R;
+      this.R = round(R);
       this.integerR = (int) Math.round(R*accuracyR);
     }
+
+    private static double round(double value) {
+      BigDecimal bd = new BigDecimal(Double.toString(value));
+      bd = bd.setScale(places, RoundingMode.HALF_UP);
+      return bd.doubleValue();
+    } 
 }

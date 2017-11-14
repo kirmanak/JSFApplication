@@ -1,0 +1,120 @@
+body {
+    background-color: #AFE4F4;
+}
+
+p {
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.button {
+    background-color: #0589ff;
+    border: none;
+    border-radius: 13px;
+    color: white;
+    padding: 20px 42px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0 auto;
+}
+
+.button:hover {
+    background-color: #0570ff;
+}
+
+.linkButton {
+    border-radius: 10px;
+    padding: 17px 17px;
+}
+
+.presentDateTime {
+    padding-bottom: 18px;
+    padding-top: 18px;
+    margin-top: 13px;
+    background-color: rgba(28, 26, 249, 0.2);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.header {
+    background-color: rgba(28, 26, 249, 0.2);
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 5px;
+    padding: 1px;
+}
+
+.mainlink {
+    text-align: center;
+}
+
+.graphics {
+    float: left;
+    margin-bottom: 50px;
+    margin-top: 63px;
+}
+
+.sliders {
+    margin-top: 159px;
+    float: right;
+    margin-right: 33px;
+}
+
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.buttons {
+    margin-left: 122px;
+    clear:both;
+}
+
+.results {
+    margin-top: 50px;
+    clear: both;
+    padding-left: 18px;
+}
+
+.float-btn {
+    float: right;
+    margin-right: 208px;
+    padding: 20px 10px;
+}
+
+th {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid;
+}
+
+td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid;
+}
+
+tr:hover {
+    background-color: rgba(28, 26, 249, 0.2);
+}
+
+table{
+    margin-left:217px;
+    border-collapse:collapse;
+}
+
+.linkButton {
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 15px 15px;
+    margin-left:100px;
+}
+
+#myCanvas {
+    border: 2px solid;
+    padding: 7px 7px;
+    border-radius: 22px;
+}

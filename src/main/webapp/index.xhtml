@@ -5,23 +5,31 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>Start page</title>
+        <h:outputStylesheet library="css" name="styles.css"  />
         <h:outputScript>
             setInterval(function() {
                 document.getElementById("hiddenForm:updatePresentDateTime").click();
             }, 1000);
         </h:outputScript>
     </h:head>
-    <h:body>
+   <h:body >
+        <h:panelGroup layout="block" class="header">
+            <h:outputText value="Пикалов Павел, Камакин Кирилл P3210" />
+        </h:panelGroup>
         <!-- Hidden form for every second time update -->
         <h:form id="hiddenForm" style="display:none">
         <h:commandButton id="updatePresentDateTime">
             <f:ajax render=":presentDateTime" />
         </h:commandButton>
         </h:form>
-        <h:outputText id="presentDateTime" value="#{timeBean.currentDate}">
-            <f:convertDateTime dateStyle="full" pattern="dd.MM.yyyy 'at' HH:mm:ss z"/>
-        </h:outputText>
+        <h:panelGroup layout="block" class="presentDateTime" >
+            <h:outputText id="presentDateTime" value="#{timeBean.currentDate}">
+                <f:convertDateTime dateStyle="full" pattern="dd.MM.yyyy 'at' HH:mm:ss z"/>
+            </h:outputText>
+        </h:panelGroup>
         <br/>
-        <h:link outcome="main" value="Основная страница" />
-    </h:body>
+        <h:panelGroup layout="block" class="mainlink">
+            <h:link outcome="main" value="Основная страница" class="button linkButton" />
+        </h:panelGroup>
+</h:body>
 </html>
