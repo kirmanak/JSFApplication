@@ -3,101 +3,128 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:ace="http://www.icefaces.org/icefaces/components"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facevars"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
     <title>Main page</title>
     <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
     <h:outputScript library="js" name="Graph.js" target="head"/>
     <h:outputScript library="js" name="script.js" target="head"/>
-    <h:outputStylesheet library="css" name="styles.css"  />
+    <!-- <h:outputStylesheet library="css" name="styles.css"  /> -->
 </h:head>
 <h:body>
-    <h:panelGroup layout="block" styleClass="container">
-        <h:panelGroup layout="block" styleClass="centerLink">
-            <h:link styleClass="button" outcome="index" value="Стартовая страница" />
-        </h:panelGroup>
-        <h:panelGroup layout="block" styleClass="graphics" >
-            <canvas id="myCanvas" width="400" height="400"></canvas>
-        </h:panelGroup>
-        <h:form id="mainForm">
-            <h:panelGroup layout="block" styleClass="sliders">
-                <h:outputLabel for="X" value="Координата X:" />
-                <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200">
-                    <ace:ajax render="xValue" event="slide" execute="X"/>
-                </ace:sliderEntry>
-                <h:outputText id="xValue" value="${rowBean.x}"/>
-                <br/>
-                <h:outputLabel for="Y" value="Координата Y:" />
-                <br/>
-                <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}" validatorMessage="Y должен быть в промежутке [-5;5]" converterMessage="Y - это число">
-                    <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
-                    <ace:ajax render="errMsg" execute="Y"/>
-                </h:inputText>
-                <br/>
-                <h:message style="color: red" id="errMsg" for="Y"/>
-                <br/>
-                <h:outputLabel for="R" value="Коэффициент R: " />
-                <ace:sliderEntry id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
-                    <ace:ajax event="slideEnd" render=":hiddenForm rValue" execute="R" onComplete="redraw(); return true;" />
-                </ace:sliderEntry>
-                <h:outputText id="rValue" value="${rowBean.r}" />
-                <br />
-            </h:panelGroup>
-            
-            <h:panelGroup layout="block" styleClass="buttons" id="buttons">
-                <h:commandButton rendered="${tableBean.list.size() != 0}" id="clearButton" value="Очистить результаты" styleClass="button">
-                    <f:actionListener binding="${tableBean.clear()}"/>
-                    <ace:ajax render=":results buttons" onComplete="redraw(); return true;"/>
-                </h:commandButton>
-                <h:commandButton value="Проверить" id="button" styleClass="button float-btn" >
-                    <ace:ajax render=":results buttons" execute="X Y R" onComplete="redraw(); return true;"/>
-                    <f:actionListener binding="${rowBean.process()}" />
-                </h:commandButton>
-            </h:panelGroup>
-        </h:form>
-        
-        <h:form id="hiddenForm">
-            <h:inputHidden id="X" value="#{rowBean.x}"/>
-            <h:inputHidden id="Y" value="#{rowBean.y}"/>
-            <h:inputHidden id="R" value="${rowBean.r}"/>
-            <h:commandButton id="hiddenButton" style="display: none;">
-                <ace:ajax render=":results mainForm:buttons" execute="X Y R" onComplete="redraw(); return true;" />
-                <f:actionListener binding="${rowBean.process()}" />
-            </h:commandButton>
-        </h:form>
-
-        <h:panelGroup layout="block" id="results" styleClass="results">
-            <h:dataTable value="${tableBean.list}" var="rowBean" rendered="${tableBean.list.size() != 0}">
-                <h:column >
-                    <f:facet name="header">X</f:facet>
-                    ${rowBean.x}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Y</f:facet>
-                    ${rowBean.y}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">R</f:facet>
-                    ${rowBean.r}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Result</f:facet>
-                    ${rowBean.result ? "Принадлежит":"Не принадлежит"}
-                </h:column>
-            </h:dataTable>
-            <h:outputScript>
-                function redraw() {
-                    draw(R.getValue()/accuracyR, myGraph);
-                    const points = ${tableBean.listAsJson};
-                    for (const point of points) {
-                        drawAPoint(point.X, point.Y, point.result, myGraph);
+    <h:form id="hiddenForm">
+        <h:inputHidden id="X" value="#{rowBean.x}"/>
+        <h:inputHidden id="Y" value="#{rowBean.y}"/>
+        <h:inputHidden id="R" value="${rowBean.r}"/>
+        <h:commandButton id="hiddenButton" style="display: none;">
+            <ace:ajax render=":results mainForm:clearButton" execute="X Y R" onComplete="redraw(); return true;" />
+            <f:actionListener binding="${rowBean.process()}" />
+        </h:commandButton>
+    </h:form>
+    <b:container>
+        <b:row>
+            <b:column span="12">
+                <h:link outcome="index" value="Стартовая страница" />
+            </b:column>
+        </b:row>
+        <b:form id="mainForm">
+            <b:row>
+                <b:column span="4">
+                    <canvas id="myCanvas" width="350" height="350"></canvas>
+                </b:column>
+                <b:column span="8">
+                    <b:row>
+                        <b:column span="3">
+                            <h:outputLabel for="X" value="Координата X:" />
+                        </b:column>
+                        <b:column span="4">
+                            <ace:sliderEntry stepPercent="25" id="X" value="#{rowBean.x}" min="-2" max="2" length="200">
+                                <ace:ajax render="xValue" event="slide" execute="X"/>
+                            </ace:sliderEntry>
+                        </b:column>
+                        <b:column span="1">
+                            <h:outputText id="xValue" value="${rowBean.x}"/>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <b:column span="3">
+                            <h:outputLabel for="Y" value="Координата Y:" />
+                        </b:column>
+                        <b:column span="4">
+                            <h:inputText autocomplete="off" id="Y" value="#{rowBean.y}" validatorMessage="Y должен быть в промежутке [-5;5]" converterMessage="Y - это число">
+                                <f:validateDoubleRange minimum="-5.0" maximum="5.0" />
+                                <ace:ajax render="errMsg" execute="Y"/>
+                            </h:inputText>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <b:column span="12">
+                            <h:message style="color: red" id="errMsg" for="Y"/>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <b:column span="3">
+                            <h:outputLabel for="R" value="Коэффициент R: " />
+                        </b:column>
+                        <b:column span="4">
+                            <ace:sliderEntry id="R" value="#{rowBean.integerR}" min="200" max="500" stepPercent="8.33333333" length="200">
+                                <ace:ajax event="slideEnd" render=":hiddenForm rValue" execute="R" onComplete="redraw(); return true;" />
+                            </ace:sliderEntry>
+                        </b:column>
+                        <b:column span="1">
+                            <h:outputText id="rValue" value="${rowBean.r}" />
+                        </b:column>
+                    </b:row>
+                </b:column>
+            </b:row>
+            <b:row>
+                <b:column span="6" id="clearButton">
+                    <h:commandButton rendered="${tableBean.list.size() != 0}" value="Очистить результаты">
+                        <f:actionListener binding="${tableBean.clear()}"/>
+                        <ace:ajax render=":results clearButton" onComplete="redraw(); return true;"/>
+                    </h:commandButton>
+                </b:column>
+                <b:column span="6">
+                    <h:commandButton value="Проверить" id="button">
+                        <ace:ajax render=":results clearButton" execute="mainForm:X mainForm:Y mainForm:R" onComplete="redraw(); return true;"/>
+                        <f:actionListener binding="${rowBean.process()}" />
+                    </h:commandButton>
+                </b:column>
+            </b:row>
+        </b:form>
+        <b:row id="results">
+            <b:column span="12">
+                <h:dataTable value="${tableBean.list}" var="rowBean" rendered="${tableBean.list.size() != 0}">
+                    <h:column>
+                        <f:facet name="header">X</f:facet>
+                        ${rowBean.x}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Y</f:facet>
+                        ${rowBean.y}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">R</f:facet>
+                        ${rowBean.r}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Result</f:facet>
+                        ${rowBean.result ? "Принадлежит":"Не принадлежит"}
+                    </h:column>
+                </h:dataTable>
+                <h:outputScript>
+                    function redraw() {
+                        draw(R.getValue()/accuracyR, myGraph);
+                        const points = ${tableBean.listAsJson};
+                        for (const point of points) {
+                            drawAPoint(point.X, point.Y, point.result, myGraph);
+                        }
                     }
-                }
-            </h:outputScript>
-        </h:panelGroup>
-    </h:panelGroup>
-
+                </h:outputScript>
+            </b:column>
+        </b:row>
+    </b:container>
     <h:outputScript target="body">
         // some identifiers
         const canvasId = "myCanvas";
@@ -110,12 +137,12 @@
         const accuracyR = ${rowBean.accuracyR};
         const R = ice.ace.instance(rId);
         const myGraph = new Graph({
-        canvasId: canvasId,
-        minX: -3,
-        minY: -6,
-        maxX: 3,
-        maxY: 6,
-        unitsPerTick: 1
+            canvasId: canvasId,
+            minX: -2.5,
+            minY: -5,
+            maxX: 2.5,
+            maxY: 5,
+            unitsPerTick: 1
         });
         myGraph.canvas.addEventListener("click", function (evt) {
                 const answer = myGraph.getClickCoords(evt);

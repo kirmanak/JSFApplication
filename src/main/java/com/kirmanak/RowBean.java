@@ -70,11 +70,11 @@ public class RowBean implements Serializable {
 
     public void setIntegerR (final int R) {
       this.integerR = R;
-      this.R = round((double) integerR/accuracyR);
+      this.R = (double) integerR/accuracyR;
     }
 
     public void setR (final double R) {
-      this.R = round(R);
+      this.R = R;
       this.integerR = (int) Math.round(R*accuracyR);
     }
 
