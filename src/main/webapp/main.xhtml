@@ -10,7 +10,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
     <h:outputScript library="js" name="Graph.js" target="head"/>
     <h:outputScript library="js" name="script.js" target="head"/>
-    <!-- <h:outputStylesheet library="css" name="styles.css"  /> -->
+    <h:outputStylesheet library="css" name="styles.css"  />
 </h:head>
 <h:body>
     <h:form id="hiddenForm">
@@ -18,14 +18,15 @@
         <h:inputHidden id="Y" value="#{rowBean.y}"/>
         <h:inputHidden id="R" value="${rowBean.r}"/>
         <h:commandButton id="hiddenButton" style="display: none;">
-            <ace:ajax render=":results mainForm:clearButton" execute="X Y R" onComplete="redraw(); return true;" />
+            <!-- <ace:ajax render=":results mainForm:clearButton" execute="X Y R" onComplete="redraw(); return true;" /> -->
+            <f:ajax render=":results mainForm:clearButton" execute="X Y R" onevent="function (data) { if (data.status == 'success') { redraw(); } }" />
             <f:actionListener binding="${rowBean.process()}" />
         </h:commandButton>
     </h:form>
     <b:container>
         <b:row>
             <b:column span="12">
-                <h:link outcome="index" value="Стартовая страница" />
+                <h:link outcome="index" styleClass="link" value="Стартовая страница" />
             </b:column>
         </b:row>
         <b:form id="mainForm">
@@ -80,14 +81,16 @@
             </b:row>
             <b:row>
                 <b:column span="6" id="clearButton">
-                    <h:commandButton rendered="${tableBean.list.size() != 0}" value="Очистить результаты">
+                    <h:commandButton styleClass="clearButtone" rendered="${tableBean.list.size() != 0}" value="Очистить результаты">
                         <f:actionListener binding="${tableBean.clear()}"/>
-                        <ace:ajax render=":results clearButton" onComplete="redraw(); return true;"/>
+                        <!-- <ace:ajax render=":results clearButton" onComplete="redraw(); return true;"/> -->
+                        <f:ajax render=":results clearButton" onevent="function (data) { if (data.status == 'success') { redraw(); } }" />
                     </h:commandButton>
                 </b:column>
                 <b:column span="6">
-                    <h:commandButton value="Проверить" id="button">
-                        <ace:ajax render=":results clearButton" execute="mainForm:X mainForm:Y mainForm:R" onComplete="redraw(); return true;"/>
+                    <h:commandButton value="Проверить" id="button" styleClass="button">
+                        <!-- <ace:ajax render=":results clearButton" execute="mainForm:X mainForm:Y mainForm:R" onComplete="redraw(); return true;"/> -->
+                        <f:ajax render=":results clearButton" execute="mainForm:X mainForm:Y mainForm:R" onevent="function (data) { if (data.status == 'success') { redraw(); } }" />
                         <f:actionListener binding="${rowBean.process()}" />
                     </h:commandButton>
                 </b:column>

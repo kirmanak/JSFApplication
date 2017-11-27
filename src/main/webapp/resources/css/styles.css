@@ -2,16 +2,12 @@ body {
     background-color: #AFE4F4;
 }
 
-span, label {
+p {
     font-size: 20px;
     font-family: sans-serif;
 }
 
-.centerLink {
-    text-align: center;
-}
-
-.button {
+.buttone {
     background-color: #0589ff;
     border: none;
     border-radius: 13px;
@@ -21,14 +17,15 @@ span, label {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 0 auto;
+    margin-left: 39%;
+    margin-top: 7%;
 }
 
-.button:hover {
+.buttone:hover {
     background-color: #0570ff;
 }
 
-.presentDateTime {
+.time {
     padding-bottom: 18px;
     padding-top: 18px;
     margin-top: 13px;
@@ -42,42 +39,62 @@ span, label {
     background-color: rgba(28, 26, 249, 0.2);
     border-radius: 8px;
     text-align: center;
-    margin-bottom: 5px;
-    padding: 1px;
+    margin-bottom: 26px;
+    margin-top: 20px;
+    padding: 21px 10px;
 }
 
-.graphics {
-    float: left;
-    margin-bottom: 50px;
-    margin-top: 63px;
+.clearButtone {
+    background-color: #0589ff;
+    border: none;
+    border-radius: 13px;
+    color: white;
+    padding: 13px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 71px;
 }
 
-.sliders {
-    margin-top: 159px;
-    float: right;
-    margin-right: 33px;
+.button {
+    background-color: #0589ff;
+    border: none;
+    border-radius: 13px;
+    color: white;
+    padding: 12px 64px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 71px;
 }
 
-.container {
-    width: 1200px;
-    margin: 0 auto;
+.link {
+    background-color: #0589ff;
+    border: none;
+    border-radius: 13px;
+    color: white;
+    padding: 14px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 71px;
 }
 
-.buttons {
-    margin-left: 122px;
-    clear:both;
-}
+.button:hover  {
+    background-color: #0570ff;
+ }
 
-.results {
-    margin-top: 50px;
-    clear: both;
-    padding-left: 18px;
-}
-
-.float-btn {
-    float: right;
-    margin-right: 215px;
-    padding: 20px 65px;
+.clearButtone:hover {
+    background-color: #0570ff;
 }
 
 th {
@@ -87,7 +104,6 @@ th {
 }
 
 table {
-    margin-left: 247px;
     border-collapse: collapse;
 }
 
@@ -96,13 +112,4 @@ td {
     text-align: center;
     border-bottom: 1px solid;
     width: 120px;
-}
-
-tr:hover {
-    background-color: rgba(28, 26, 249, 0.2);
-}
-
-#myCanvas {
-    border: 2px solid;
-    border-radius: 22px;
 }
